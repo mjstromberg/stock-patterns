@@ -10,20 +10,11 @@
   <body>
     <h1>Stock Pattern Analyzer</h1>
     <p>Pick a stock:</p>
-    <div id="tester" style="width:600px;height:250px;"></div>
+    <div id="ohlcChart" style="width:800px;height:400px;"></div>
     <label>
       <input type="text" id="ajaxTextbox"/>
     </label>
     <span id="ajaxButton" style="cursor: pointer; text-decoration: underline">Enter Ticker Symbol</span>
-    <script>
-      TESTER = document.getElementById('tester');
-      Plotly.plot( TESTER, [{
-        x: [1, 2, 3, 4, 5],
-        y: [1, 2, 4, 8, 16] }], {
-        margin: {t: 0 } } );
-    </script>
-    
-    <!--https://www.quandl.com/api/v3/datasets/WIKI/FB.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100&-->
     
     <script type="text/javascript">
       (function() {
@@ -55,8 +46,29 @@
           try {
             if (httpRequest.readyState === XMLHttpRequest.DONE) {
               if (httpRequest.status === 200) {
-                var response = JSON.parse(httpRequest.responseText);
-                console.log(response.dataset.data);
+                var response = JSON.parse(httpRequest.responseText).dataset.data;
+                
+                // Reformat Data
+                var reformatData = response.reduce(function(result, dayArrayData) {
+                  result[4].push([ dayArrayData[0].slice(0, 4), dayArrayData[0].slice(5, 7), dayArrayData[0].slice(8) ]);
+                  result[0].push(dayArrayData[1]);
+                  result[1].push(dayArrayData[2]);
+                  result[2].push(dayArrayData[3]);
+                  result[3].push(dayArrayData[4]);
+                }, [ [], [], [], [], [] ]);
+                
+                // Create Plotly OHLC Chart
+                var fig = PlotlyFinance.createOHLC(
+                  {
+                    open: reformatData[0],
+                    high: reformatData[1],
+                    low: reformatData[2],
+                    close: reformatData[3],
+                    dates: reformatData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); })
+                  }
+                );
+                Plotly.newPlot('ohlcChart', fig.data, fig.layout);
+                
               } else {
                 alert('There was a problem with the request.');
               }
