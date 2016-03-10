@@ -11,7 +11,10 @@
     <h1>Stock Pattern Analyzer</h1>
     <p>Pick a stock:</p>
     <div id="tester" style="width:600px;height:250px;"></div>
-    <span id="ajaxButton" style="cursor: pointer; text-decoration: underline">Make a request</span>
+    <label>
+      <input type="text" type="ajaxTextbox"/>
+    </label>
+    <span id="ajaxButton" style="cursor: pointer; text-decoration: underline">Enter Ticker Symbol</span>
     <script>
       TESTER = document.getElementById('tester');
       Plotly.plot( TESTER, [{
@@ -25,9 +28,15 @@
     <script type="text/javascript">
       (function() {
         var httpRequest;
-        document.getElementById("ajaxButton").onclick = function() {
-          makeRequest('https://www.quandl.com/api/v3/datasets/WIKI/FB.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100');
-        };
+        
+        document.getElementByID("ajaxButton").onclick = function() {
+          var stockName = document.getElementById("ajaxTextbox").value.toString().toUpperCase();
+          var stockURL = 'https://www.quandl.com/api/v3/datasets/WIKI/' + stockName + '.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100';
+          
+          if (stockName) {
+            makeRequest(stockURL);
+          }
+        }
         
         function makeRequest(url) {
           httpRequest = new XMLHttpRequest();
