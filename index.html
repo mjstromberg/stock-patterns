@@ -5,11 +5,18 @@
     <title>Stock Pattern Analyzer</title>
     <link rel="stylesheet" href="assets/stylesheets/main.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="/assets/javascripts/tester.js"></script>
+    <!--<script src="/assets/javascripts/tester.js"></script>-->
   </head>
   <body>
     <h1>Stock Pattern Analyzer</title>
     <p>Pick a stock:</p>
     <div id="tester" style="width:600px;height:250px;"></div>
+    <script>
+      TESTER = document.getElementById('tester');
+      Plotly.plot( TESTER, [{
+        x: [1, 2, 3, 4, 5],
+        y: [1, 2, 4, 8, 16] }], {
+        margin: {t: 0 } } );
+    </script>
   </body>
 </html>
