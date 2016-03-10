@@ -11,6 +11,7 @@
     <h1>Stock Pattern Analyzer</title>
     <p>Pick a stock:</p>
     <div id="tester" style="width:600px;height:250px;"></div>
+    <span id="ajaxButton" style="cursor: pointer; text-decoration: underline">Make a request</span>
     <script>
       TESTER = document.getElementById('tester');
       Plotly.plot( TESTER, [{
@@ -18,5 +19,61 @@
         y: [1, 2, 4, 8, 16] }], {
         margin: {t: 0 } } );
     </script>
+    
+    <!--https://www.quandl.com/api/v3/datasets/WIKI/FB.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100&-->
+    
+    <script type="text/javascript>
+      (function() {
+        var httpRequest;
+        document.getElementById("ajaxButton").onclick = function() {
+          makeRequest('https://www.quandl.com/api/v3/datasets/WIKI/FB.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100');
+        };
+        
+        function makeRequest(url) {
+          httpRequest = new XMLHttpRequest();
+          
+          if (!httpRequest) {
+            alert('Unable to create an XMLHTTP instance.');
+            return false;
+          }
+          
+          httpRequest.onreadystatechange = alertContents;
+          httpRequest.open('GET', url);
+          httpRequest.send();
+        }
+        
+        function alertContents() {
+          try {
+            if (httpRequest.readyState === XMLHttpRequest.DONE) {
+              if (httpRequest.status === 200) {
+                alert(httpRequest.responseText);
+              } else {
+                alert('There was a problem with the request.');
+              }
+            }
+          }
+          catch( e ) {
+            alert('Caught Exception: ' + e.description);
+          }
+        }
+      })();
+    </script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
