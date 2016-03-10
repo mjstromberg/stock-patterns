@@ -29,7 +29,7 @@
       (function() {
         var httpRequest;
         
-        document.getElementByID("ajaxButton").onclick = function() {
+        document.getElementById("ajaxButton").onclick = function() {
           var stockName = document.getElementById("ajaxTextbox").value.toString().toUpperCase();
           var stockURL = 'https://www.quandl.com/api/v3/datasets/WIKI/' + stockName + '.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100';
           
