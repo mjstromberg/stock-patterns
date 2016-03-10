@@ -56,7 +56,7 @@
             if (httpRequest.readyState === XMLHttpRequest.DONE) {
               if (httpRequest.status === 200) {
                 var response = JSON.parse(httpRquest.responseText);
-                alert(response.dataset.data);
+                alert(response.dataset_data.data);
               } else {
                 alert('There was a problem with the request.');
               }
