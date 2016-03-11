@@ -1,6 +1,8 @@
 (function() {
+
   var httpRequest;
-        
+  
+  // On click, make request to get data for stock named in textbox      
   document.getElementById("ajaxButton").onclick = function() {
     var stockName = document.getElementById("ajaxTextbox").value.toString().toUpperCase();
     var stockURL = 'https://www.quandl.com/api/v3/datasets/WIKI/' + stockName + '.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100';
@@ -9,7 +11,8 @@
        makeRequest(stockURL);
     }
   }
-        
+  
+  // Define the http request function that gets data from argument url
   function makeRequest(url) {
     httpRequest = new XMLHttpRequest();
           
@@ -18,12 +21,13 @@
       return false;
     }
           
-    httpRequest.onreadystatechange = alertContents;
+    httpRequest.onreadystatechange = buildChart;
     httpRequest.open('GET', url);
     httpRequest.send();
   }
-        
-  function alertContents() {
+  
+  // Get data and use it to populate chart
+  function buildChart() {
     try {
       if (httpRequest.readyState === XMLHttpRequest.DONE) {
         if (httpRequest.status === 200) {
@@ -37,6 +41,7 @@
             result[2].push(dayArrayData[3]);
             result[3].push(dayArrayData[4]);
           }, [ [], [], [], [], [] ]);
+          console.log(reformatData);
                 
           // Create Plotly OHLC Chart
           var fig = PlotlyFinance.createOHLC(
