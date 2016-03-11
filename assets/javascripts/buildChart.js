@@ -1,14 +1,24 @@
 var httpRequest;
-  
-// On click, make request to get data for stock named in textbox      
-document.getElementById("tickerSubmitButton").onclick = function() {
-  var stockName = document.getElementById("ajaxTextbox").value.toString().toUpperCase();
+
+// Define function to get ticker symbol and make http reqest
+var getStock = function() {
+  var stockName = document.getElementById('tickerTextbox').value.toString().toUpperCase();
   var stockURL = 'https://www.quandl.com/api/v3/datasets/WIKI/' + stockName + '.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100';
           
   if (stockName) {
      makeRequest(stockURL);
   }
-}
+};
+
+// On click, make request to get data for stock named in textbox      
+document.getElementById('tickerSubmitButton').onclick = getStock;
+
+// On keydown, make request to get data for stock named in textbox
+document.getElementById('tickerTextbox').onkeydown = function() {
+  if(event.keyCode === 13) {
+    getStock();
+  }
+};
   
 // Define the http request function that gets data from argument url
 function makeRequest(url) {
@@ -34,11 +44,11 @@ function buildChart() {
 
         // Reformat Data
         var reformatData = response.reduce(function(result, dayArrayData) {
-          result[4].push([ dayArrayData[0].slice(0, 4), dayArrayData[0].slice(5, 7), dayArrayData[0].slice(8) ]);
-          result[0].push(dayArrayData[1]);
-          result[1].push(dayArrayData[2]);
-          result[2].push(dayArrayData[3]);
-          result[3].push(dayArrayData[4]);
+          result[4].unshift([ dayArrayData[0].slice(0, 4), dayArrayData[0].slice(5, 7), dayArrayData[0].slice(8) ]);
+          result[0].unshift(dayArrayData[1]);
+          result[1].unshift(dayArrayData[2]);
+          result[2].unshift(dayArrayData[3]);
+          result[3].unshift(dayArrayData[4]);
           return result;
         }, [ [], [], [], [], [] ]);
                 
