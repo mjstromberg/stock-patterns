@@ -1,4 +1,4 @@
-(function() {
+
 
   var httpRequest;
   
@@ -64,5 +64,5 @@
       alert('Caught Exception: ' + e.description);
     }
   }
-})();
+
 
