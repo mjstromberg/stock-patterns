@@ -46,3 +46,27 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+/* ======================================================== */
+#ohlcChart {
+	position: center;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	border-color: rgb(8,82,107);
+}
+
+.button {
+	cursor: pointer;
+	font-weight: 400;
+	color: rgb(8,82,107);
+	text-align: center;
+	display: inline-block;
+	margin: 10px;
+	padding: 11px 25px;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	border-color: rgb(8,82,107);
+	outline: 0;
+}
