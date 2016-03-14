@@ -10,11 +10,15 @@
   </head>
   <body>
     <h1>Stock Pattern Analyzer</h1>
-    <div id="ohlcChart" style="width:800px;height:500px;"></div>
-    <label>
-      <input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/>
-    </label>
-    <span id="tickerSubmitButton" class="button">Enter Ticker Symbol</span>
+    <div id="ohlcChart" class="chart" style="width:800px;height:500px;"></div>
+    <div id="volumeChart" class="chart" style="width:800px;height:100px;"></div>
+    <div display="block">
+      <label>
+        <input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/>
+      </label>
+      <span id="tickerSubmitButton" class="button">Submit Ticker Symbol</span>
+    </div>
+
     
     <script type="text/javascript" src="assets/javascripts/buildChart.js"></script>
     <!-- GitHub strict MIME type enforcement workaround -->

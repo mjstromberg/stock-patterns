@@ -54,12 +54,16 @@ h1 {
 	margin: 10px;
 }
 
-#ohlcChart {
-	margin: 10px;
+.chart {
+	margin: 0px 10px 0px 10px;
 	border-style: solid;
 	border-width: 2px;
 	border-radius: 3px;
 	border-color: rgb(8,82,107);
+}
+
+#volumeChart {
+	border-top: none;
 }
 
 #tickerTextbox {
