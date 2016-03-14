@@ -44,10 +44,10 @@ var buildChart = function (chartType, data) {
   );
   
   // Handle layout
-  stockFig.layout.title = chartType === 'stock' ? data[6].name.slice(0, data[6].name.indexOf(')') + 1) : 'S&P 500';
+  stockFig.layout.title = chartType === 'stock' ? data[6].name.slice(0, data[6].name.indexOf(')') + 1) + ' - Weekly' : 'S&P 500 - Daily';
   stockFig.layout.xaxis.title = 'Dates';
   stockFig.layout.annotations = [{
-    text: chartType === 'stock' ? 'Adjusted Stock Price ($)' : 'Price ($)',
+    text: chartType === 'stock' ? 'Adjusted Stock Price ($)     ' : 'Price ($)     ',
     x: '-0.055',
     y: 0.5,
     xref: 'paper',
@@ -60,6 +60,30 @@ var buildChart = function (chartType, data) {
     textangle: 270
   }];
   
+  // BUILD CUP LOGIC HERE
+  // Check for 30% prior uptrend
+  var priorUptrend = {
+    present: false,
+    minLow: data[2][0],
+    minLowDate: data[4][0],
+    maxHigh: data[2][0],
+    maxHighDate: data[4][0]
+  };
+  
+  data[1].forEach(function(high, index) {
+    if (high > priorUptrend.maxHigh) {
+      priorUptrend.maxHigh = high;
+      priorUptrend.maxHighDate = data[4][index];
+    }
+    
+    if (data[2][index] < priorUptrend.minLow) {
+      priorUptrend.minLow = data[2][index];
+      priorUptrend.minLowDate = data[4][index];
+    }
+    
+    priorUptrend.present = (priorUptrend.maxHigh - priorUptrend.minLow) / priorUptrend.minLow > 0.3;
+  });
+  console.log(priorUptrend);
   Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
   
   // Build volume chart
