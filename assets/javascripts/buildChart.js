@@ -24,7 +24,6 @@ var formatData = function(chartType, dataset) {
     return result;
   }, [ [], [], [], [], [], [] ]);
   
-  // SHIFT THIS OVER
   reformatStockData[6] = dataset;
   return reformatStockData;
 };
@@ -43,25 +42,23 @@ var buildChart = function (chartType, data) {
       dates: data[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); })
     }
   );
-  console.log(data[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); }));
+  
   // Handle layout
-  stockFig.layout = {
-    title: chartType === 'stock' ? data[6].name.slice(0, data[6].name.indexOf(')') + 1) + ' - Weekly': 'S&P 500 - Daily',
-    xaxis: {title: 'Dates'},
-    annotations: [{
-      text: chartType === 'stock' ? 'Adjusted Stock Price ($)     ' : 'Price ($)     ',
-      x: '-0.05',
-      y: 0.5,
-      xref: 'paper',
-      yref: 'paper',
-      font: {
-        size: 14
-      },
-      showarrow: false,
-      xanchor: 'right',
-      textangle: 270
-    }]
-  };
+  stockFig.layout.title = chartType === 'stock' ? data[6].name.slice(0, data[6].name.indexOf(')') + 1) : 'S&P 500';
+  stockFig.layout.xaxis.title = 'Dates';
+  stockFig.layout.annotations = [{
+    text: chartType === 'stock' ? 'Adjusted Stock Price ($)' : 'Price ($)',
+    x: '-0.055',
+    y: 0.5,
+    xref: 'paper',
+    yref: 'paper',
+    font: {
+      size: 14
+    },
+    showarrow: false,
+    xanchor: 'right',
+    textangle: 270
+  }];
   
   Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
   
