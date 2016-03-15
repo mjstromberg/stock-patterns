@@ -61,29 +61,62 @@ var buildChart = function (chartType, data) {
   }];
   
   // BUILD CUP LOGIC HERE
-  // Check for 30% prior uptrend
-  var priorUptrend = {
-    present: false,
+  // Set up cupData object
+  var cupData = {
+    priorUptrend: false,
     minLow: data[2][0],
     minLowDate: data[4][0],
     maxHigh: data[2][0],
-    maxHighDate: data[4][0]
+    maxHighDate: data[4][0],
+    numWeeksBelowHigh: 0,
+    perBelowHigh: 0,
+    deepEnoughBase: false,
+    cup: []
   };
   
+  // Loop through each data point and 
   data[1].forEach(function(high, index) {
-    if (high > priorUptrend.maxHigh) {
-      priorUptrend.maxHigh = high;
-      priorUptrend.maxHighDate = data[4][index];
+    if (high > cupData.maxHigh) {
+      cupData.maxHigh = high;
+      cupData.maxHighDate = data[4][index];
+      
+      if (cupData.deepEnoughBase && 
+          cupData.numWeeksBelowHigh > 7 && 
+          cupData.numWeeksBelowHigh < 66 &&
+          cupData.priorUptrend) {
+        cupData.cup.push({
+          minLow: cupData.minLow,
+          minLowDate: cupData.minLowDate,
+          maxHigh: cupData.maxHigh,
+          maxHighDate: cupData.maxHighDate,
+          numWeeksBelowHigh: cupData.numWeeksBelowHigh,
+          perBelowHigh: cupData.perBelowHigh
+        });
+        
+        cupData.minLow = cupData.maxHigh;
+      }
+      
+      cupData.numWeeksBelowHigh = 0;
+      cupData.perBelowHigh = 0;
+    } else {
+      cupData.numWeeksBelowHigh++;
+      cupData.perBelowHigh = (cupData.maxHigh - data[2][index]) / cupData.maxHigh;
+      
+      if (data[2][index] < cupData.minLow) {
+        cupData.minLow = data[2][index];
+        cupData.minLowDate = data[4][index];
+      }
+      
+      if (cupData.perBelowHigh > 0.12) {
+        cupData.deepEnoughBase = true;
+      }
+      
+      // Check for too deep of a cup??
     }
-    
-    if (data[2][index] < priorUptrend.minLow) {
-      priorUptrend.minLow = data[2][index];
-      priorUptrend.minLowDate = data[4][index];
-    }
-    
-    priorUptrend.present = (priorUptrend.maxHigh - priorUptrend.minLow) / priorUptrend.minLow > 0.3;
+        
+    cupData.priorUptrend = (cupData.maxHigh - cupData.minLow) / cupData.minLow > 0.3;
   });
-  console.log(priorUptrend);
+  console.log(cupData);
   Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
   
   // Build volume chart
