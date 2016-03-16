@@ -66,9 +66,9 @@ var buildChart = function (chartType, data) {
   var cupData = {
     priorUptrend: false,
     minLow: data[2][0],
-    minLowDate: data[4][0],
+    minLowDate: new Date(data[4][0][0], data[4][0][1]-1, data[4][0][2]),
     maxHigh: data[1][0],
-    maxHighDate: data[4][0],
+    maxHighDate: new Date(data[4][0][0], data[4][0][1]-1, data[4][0][2]),
     numWeeksBelowHigh: 0,
     perBelowHigh: 0,
     deepEnoughBase: false,
@@ -79,7 +79,7 @@ var buildChart = function (chartType, data) {
   data[1].forEach(function(high, index) {
     if (high > cupData.maxHigh) {
       cupData.maxHigh = high;
-      cupData.maxHighDate = data[4][index];
+      cupData.maxHighDate = new Date(data[4][index][0], data[4][index][1]-1, data[4][index][2]);
       
       if (cupData.deepEnoughBase && 
           cupData.numWeeksBelowHigh > 7 && 
@@ -93,7 +93,7 @@ var buildChart = function (chartType, data) {
           numWeeksBelowHigh: cupData.numWeeksBelowHigh,
           perBelowHigh: cupData.perBelowHigh
         });
-        alert(cupData.cup);
+        alert(JSON.stringify(cupData.cup));
         cupData.minLow = cupData.maxHigh;
       }
       
@@ -108,7 +108,7 @@ var buildChart = function (chartType, data) {
 
       if (data[2][index] < cupData.minLow) {
         cupData.minLow = data[2][index];
-        cupData.minLowDate = data[4][index];
+        cupData.minLowDate = new Date(data[4][index][0], data[4][index][1]-1, data[4][index][2]);
       }
       
       if (cupData.perBelowHigh > 0.12) {
@@ -118,7 +118,9 @@ var buildChart = function (chartType, data) {
       // Check for too deep of a cup??
     }
         
-    cupData.priorUptrend = (cupData.maxHigh - cupData.minLow) / cupData.minLow > 0.3;
+    if (!cupData.deepEnoughBase) {
+      cupData.priorUptrend = (cupData.maxHigh - cupData.minLow) / cupData.minLow > 0.3;
+    }
 
   });
   
