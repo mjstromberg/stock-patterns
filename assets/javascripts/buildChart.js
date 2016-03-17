@@ -77,6 +77,35 @@ var buildChart = function (chartType, data) {
 
   // Loop through each data point 
   data[1].forEach(function(high, index) {
+    
+    // Defaults:
+      // cupLength = 0
+      // cupDepth = 0
+      // maxHigh = 
+      // maxHighDate =
+      // minLow =
+      // minLowDate = 
+    
+    // If new high
+      // If in prior
+        // maxHigh = high
+        // maxHighDate = date
+      // If in cup (prior uptrend, correct length, correct depth)
+        // cupLength++
+        // cup.push(data about cup)
+        // minLow = maxHigh
+        // minLowDate = maxHighDate
+        // maxHigh = high
+        // maxHighDate = date
+      // If breakout
+    // If new low
+      // If in prior
+      // If in cup
+    // If neither new high or new low
+      // If in prior
+      // If in cup
+    
+    
     if (high > cupData.maxHigh) {
       cupData.maxHigh = high;
       cupData.maxHighDate = new Date(data[4][index][0], data[4][index][1]-1, data[4][index][2]);
