@@ -60,9 +60,105 @@ var buildChart = function (chartType, data) {
     textangle: 270
   }];
   
+    // cupObject
+      // cupDepth = 0
+      // maxHigh = 
+      // maxHighDate =
+      // minLow =
+      // minLowDate = 
+      // cup = [];
+    
+    // If new high
+      // If in prior
+        // maxHigh = high
+        // maxHighDate = date
+      // If in cup (prior uptrend, correct length, correct depth)
+        // cup.push(data about cup)
+        // minLow = maxHigh
+        // minLowDate = maxHighDate
+        // maxHigh = high
+        // maxHighDate = date
+    // If new low
+      // If in prior
+        // minLow = low
+        // minLowDate = date
+      // If in cup
+        // cupDepth = maxHigh - low > cupDepth ? maxHigh - low : cupDepth
+        // If (too long, too deep)
+          // minLow = min
+          // minLowDate = date
+          // cupDepth = 0
+          // maxHigh = high
+          // maxHighDate = date
+    // If neither new high or new low do nothing
+  
+    // If last date and no cups, push partial cup data
+  
+  var newData = data.slice();
+  newData[4] = newData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); });
+  var cups = [];
+  var cupData = {
+    maxHigh: data[1][0],
+    maxHighDate: data[4][0],
+    minLow: data[2][0],
+    minLowDate: data[4][0],
+    cupDepth: 0,
+    partialCup: false
+  };
+  
+  newData[4].forEach(function(date, index) {
+    if (newData[1][index] > cupData.maxHigh) {
+      if ((cupData.maxHigh - cupData.minLow) / cupData.minLow < 0.30 || cupData.cupDepth === 0) {
+        cupData.maxHigh = newData[1][index];
+        cupData.maxHighDate = date;
+      } else {
+        cups.push(cupData);
+        cupData.minLow = cupData.maxHigh;
+        cupData.minLowDate = cupData.maxHighDate;
+        cupData.maxHigh = newData[4][index];
+        cupData.maxHighDate = date;
+      }
+    }
+    
+    if (newData[2][index] < cupData.minLow) {
+      if ((cupData.maxHigh - cupData.minLow) / cupData.minLow < 0.30) {
+        cupData.minLow = newData[2][index];
+        cupData.minLowDate = date;
+      } else {
+        cupData.cupDepth = cupData.maxHigh - newData[2][index] > cupData.cupDepth ? cupData.maxHigh - newData[2][index] : cupData.cupDepth;
+        if (cupData.cupDepth > 0.33 || cupData.maxHighDate - date > 39312000000) {
+          cupData.minLow = newData[2][index];
+          cupData.minLowDate = date;
+          cupData.cupDepth = 0;
+          cupData.maxHigh = newData[1][index];
+          cupData.maxHighDate = date;
+        } else if (index === newData[4].length - 1) {
+          cupData.partialCup = true;
+          cups.push(cupData);
+        }
+      }
+    }
+    
+    if (newData[1][index] <= cupData.maxHigh &&
+        newData[2][index] >= cupData.minLow &&
+        cupData.cupDepth > 0) {
+      if (cupData.cupDepth > 0.33 || cupData.maxHighDate - date > 39312000000) {
+        cupData.minLow = newData[2][index];
+        cupData.minLowDate = date;
+        cupData.cupDepth = 0;
+        cupData.maxHigh = newData[1][index];
+        cupData.maxHighDate = date;
+      } else if (index === newData[4].length - 1) {
+        cupData.partialCup = true;
+        cups.push(cupData);
+      }
+    }
+  });
+  
+  
   // BUILD CUP LOGIC HERE
   // Set up cupData object
-  
+  /*
   var cupData = {
     priorUptrend: false,
     minLow: data[2][0],
@@ -76,36 +172,7 @@ var buildChart = function (chartType, data) {
   };
 
   // Loop through each data point 
-  data[1].forEach(function(high, index) {
-    
-    // Defaults:
-      // cupLength = 0
-      // cupDepth = 0
-      // maxHigh = 
-      // maxHighDate =
-      // minLow =
-      // minLowDate = 
-    
-    // If new high
-      // If in prior
-        // maxHigh = high
-        // maxHighDate = date
-      // If in cup (prior uptrend, correct length, correct depth)
-        // cupLength++
-        // cup.push(data about cup)
-        // minLow = maxHigh
-        // minLowDate = maxHighDate
-        // maxHigh = high
-        // maxHighDate = date
-      // If breakout
-    // If new low
-      // If in prior
-      // If in cup
-    // If neither new high or new low
-      // If in prior
-      // If in cup
-    
-    
+  data[1].forEach(function(high, index) {    
     if (high > cupData.maxHigh) {
       cupData.maxHigh = high;
       cupData.maxHighDate = new Date(data[4][index][0], data[4][index][1]-1, data[4][index][2]);
@@ -152,7 +219,8 @@ var buildChart = function (chartType, data) {
     }
 
   });
-  
+  */
+  console.log(cups);
   Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
   
   // Build volume chart
