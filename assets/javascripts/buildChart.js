@@ -98,19 +98,22 @@ var buildChart = function (chartType, data) {
   newData[4] = newData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); });
   var cups = [];
   var cupData = {
-    maxHigh: data[1][0],
-    maxHighDate: data[4][0],
-    minLow: data[2][0],
-    minLowDate: data[4][0],
+    maxHigh: newData[1][0],
+    maxHighDate: newData[4][0],
+    minLow: newData[2][0],
+    minLowDate: newData[4][0],
     cupDepth: 0,
     partialCup: false
   };
   
   newData[4].forEach(function(date, index) {
     if (newData[1][index] > cupData.maxHigh) {
-      if ((cupData.maxHigh - cupData.minLow) / cupData.minLow < 0.30 || cupData.cupDepth === 0) {
+      if ((cupData.maxHigh - cupData.minLow) / cupData.minLow < 0.30 ||
+          cupData.cupDepth < 0.12 ||
+          cupData.maxHighDate - date < 3628800000) {
         cupData.maxHigh = newData[1][index];
         cupData.maxHighDate = date;
+        cupData.cupDepth = 0;
       } else {
         cups.push(cupData);
         cupData.minLow = cupData.maxHigh;
@@ -124,6 +127,8 @@ var buildChart = function (chartType, data) {
       if ((cupData.maxHigh - cupData.minLow) / cupData.minLow < 0.30) {
         cupData.minLow = newData[2][index];
         cupData.minLowDate = date;
+        cupData.maxHigh = newData[1][index];
+        cupData.maxHighDate = date;
       } else {
         cupData.cupDepth = cupData.maxHigh - newData[2][index] > cupData.cupDepth ? cupData.maxHigh - newData[2][index] : cupData.cupDepth;
         if (cupData.cupDepth > 0.33 || cupData.maxHighDate - date > 39312000000) {
@@ -141,7 +146,8 @@ var buildChart = function (chartType, data) {
     
     if (newData[1][index] <= cupData.maxHigh &&
         newData[2][index] >= cupData.minLow &&
-        cupData.cupDepth > 0) {
+        (cupData.maxHigh - cupData.minLow) / cupData.minLow > 0.30) {
+      cupData.cupDepth = cupData.maxHigh - newData[2][index] > cupData.cupDepth ? cupData.maxHigh - newData[2][index] : cupData.cupDepth;
       if (cupData.cupDepth > 0.33 || cupData.maxHighDate - date > 39312000000) {
         cupData.minLow = newData[2][index];
         cupData.minLowDate = date;
@@ -153,6 +159,8 @@ var buildChart = function (chartType, data) {
         cups.push(cupData);
       }
     }
+    
+    console.log(JSON.stringify(cupData));
   });
   
   
