@@ -139,21 +139,34 @@ var buildChart = function (chartType, data) {
   });
   
   // Build annotations for cups
-  var dateStart = (new Date(2015, 6 -1, 21)).getTime();
-  var dateEnd = (new Date(2015, 10 - 1, 11)).getTime();
-  var dateAverage = ( dateStart + dateEnd ) / 2;
-  var apex = ( 0.2752644609498087 * 13.329 - 13.329 ) * -1 * 0.5;
-  var maxHighAdjusted = 13.329 * 0.9;
+  stockFig.layout.shapes = [];
   
-  stockFig.layout.shapes = [
-    {
-      path: 'M ' + dateStart + ', ' + maxHighAdjusted + ' Q ' + dateAverage + ', ' + apex + ' ' + dateEnd + ', ' + maxHighAdjusted,
+  cups.forEach(function(cup) {
+    var dateAverage = ( cup.maxHighDate.getTime() + cup.breakoutDate.getTime() ) / 2;
+    var apex = ( cup.maxHigh - ( cup.cupDepth * cup.maxHigh ) ) * 0.60;
+    var maxHighAdjusted = cup.maxHigh * 0.9;
+  
+    stockFig.layout.shapes.push({
+      path: 'M ' + cup.maxHighDate.getTime() + ', ' + maxHighAdjusted + ' Q ' + dateAverage + ', ' + apex + ' ' + cup.breakoutDate.getTime() + ', ' + maxHighAdjusted,
       type: 'path',
       line: {
         color: 'rgb(93, 164, 214)'
       }
-    }
-  ];
+    });
+    
+    stockFig.layout.shapes.push({
+      type: 'rect',
+      x0: cup.maxHighDate.getTime(),
+      y0: cup.maxHigh + 0.10,
+      x1: cup.breakoutDate.getTime(),
+      y1: cup.maxHigh + 0.10 + cup.maxHigh * 0.05,
+      fillcolor: 'rgb(93, 164, 214)',
+      opacity: 0.2,
+      line: {
+        width: 0
+      }
+    });
+  });
   
   Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
   
