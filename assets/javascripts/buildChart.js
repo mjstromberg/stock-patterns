@@ -103,19 +103,46 @@ var buildChart = function (chartType, data) {
     minLow: newData[2][0],
     minLowDate: newData[4][0],
     cupDepth: 0,
+    breakoutDate: 0,
     partialCup: false
   };
   
   newData[4].forEach(function(date, index) {
+    if (newData[1][index] <= cupData.maxHigh &&
+        newData[2][index] >= cupData.minLow &&
+        (cupData.maxHigh - cupData.minLow) / cupData.minLow > 0.30) {
+      cupData.cupDepth = ( cupData.maxHigh - newData[2][index] ) / cupData.maxHigh > cupData.cupDepth ? ( cupData.maxHigh - newData[2][index] ) / cupData.maxHigh : cupData.cupDepth;
+      cupData.cupWidth = 
+      console.log('normal');
+      if (date - cupData.maxHighDate > 39312000000) {
+        cupData.minLow = newData[2][index];
+        cupData.minLowDate = date;
+        cupData.cupDepth = 0;
+        cupData.maxHigh = newData[1][index];
+        cupData.maxHighDate = date;
+      } else if (index === newData[4].length - 1) {
+        console.log('normal partial');
+        cupData.partialCup = true;
+        cupData.breakoutDate = date;
+        cups.push(Object.assign({}, cupData));
+      }
+    }
+    
     if (newData[1][index] > cupData.maxHigh) {
       if ((cupData.maxHigh - cupData.minLow) / cupData.minLow < 0.30 ||
           cupData.cupDepth < 0.12 ||
-          cupData.maxHighDate - date < 3628800000) {
+          date - cupData.maxHighDate < 3628800000) {
+        console.log('high prior');
+        console.log((cupData.maxHigh - cupData.minLow) / cupData.minLow < 0.30);
+        console.log(cupData.cupDepth < 0.12);
+        console.log(date - cupData.maxHighDate);
         cupData.maxHigh = newData[1][index];
         cupData.maxHighDate = date;
         cupData.cupDepth = 0;
       } else {
-        cups.push(cupData);
+        console.log('high cup');
+        cupData.breakoutDate = date;
+        cups.push(Object.assign({}, cupData));
         cupData.minLow = cupData.maxHigh;
         cupData.minLowDate = cupData.maxHighDate;
         cupData.maxHigh = newData[4][index];
@@ -125,41 +152,29 @@ var buildChart = function (chartType, data) {
     
     if (newData[2][index] < cupData.minLow) {
       if ((cupData.maxHigh - cupData.minLow) / cupData.minLow < 0.30) {
+        console.log('low prior');
         cupData.minLow = newData[2][index];
         cupData.minLowDate = date;
         cupData.maxHigh = newData[1][index];
         cupData.maxHighDate = date;
       } else {
+        console.log('low cup');
         cupData.cupDepth = cupData.maxHigh - newData[2][index] > cupData.cupDepth ? cupData.maxHigh - newData[2][index] : cupData.cupDepth;
-        if (cupData.cupDepth > 0.33 || cupData.maxHighDate - date > 39312000000) {
+        if (cupData.cupDepth > 0.33 || date - cupData.maxHighDate > 39312000000) {
+          console.log('low out of bounds');
           cupData.minLow = newData[2][index];
           cupData.minLowDate = date;
           cupData.cupDepth = 0;
           cupData.maxHigh = newData[1][index];
           cupData.maxHighDate = date;
         } else if (index === newData[4].length - 1) {
+          console.log('low partial');
           cupData.partialCup = true;
-          cups.push(cupData);
+          cupData.breakoutDate = date;
+          cups.push(Object.assign({}, cupData));
         }
       }
     }
-    
-    if (newData[1][index] <= cupData.maxHigh &&
-        newData[2][index] >= cupData.minLow &&
-        (cupData.maxHigh - cupData.minLow) / cupData.minLow > 0.30) {
-      cupData.cupDepth = cupData.maxHigh - newData[2][index] > cupData.cupDepth ? cupData.maxHigh - newData[2][index] : cupData.cupDepth;
-      if (cupData.cupDepth > 0.33 || cupData.maxHighDate - date > 39312000000) {
-        cupData.minLow = newData[2][index];
-        cupData.minLowDate = date;
-        cupData.cupDepth = 0;
-        cupData.maxHigh = newData[1][index];
-        cupData.maxHighDate = date;
-      } else if (index === newData[4].length - 1) {
-        cupData.partialCup = true;
-        cups.push(cupData);
-      }
-    }
-    
     console.log(JSON.stringify(cupData));
   });
   
@@ -228,7 +243,10 @@ var buildChart = function (chartType, data) {
 
   });
   */
-  console.log(cups);
+  console.log('cups');
+  cups.forEach(function(cup) {
+    console.log(JSON.stringify(cup));
+  });
   Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
   
   // Build volume chart
