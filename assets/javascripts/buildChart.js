@@ -31,7 +31,6 @@ var formatData = function(chartType, dataset) {
 
 // Get data and use it to populate chart
 var buildChart = function (chartType, data) {
-  console.log(data);
   // Build stock chart
   var stockFig = PlotlyFinance.createOHLC(
     {
@@ -130,7 +129,6 @@ var buildChart = function (chartType, data) {
         }
       }
     }
-    console.log(JSON.stringify(cupData));
   });
   
   console.log('cups');
@@ -182,7 +180,8 @@ var buildChart = function (chartType, data) {
     }),
     type: 'bar',
     marker: { color: 'rgb(93,170,136)' },
-    showlegend: false
+    showlegend: false,
+    hoverinfo: 'y'
   };
   
   // Build dataset for down weeks
@@ -193,13 +192,15 @@ var buildChart = function (chartType, data) {
     }),
     type: 'bar',
     marker: { color: 'rgb(255,121,113)' },
-    showlegend: false
+    showlegend: false,
+    hoverinfo: 'y'
   };
   
   // Handle volume chart layout
   var layout = {
     margin: {b: 20, t: 10},
-    yaxis: {title: 'Volume'}
+    yaxis: {title: 'Volume'},
+    bargap: 0.99
   };
    
   Plotly.newPlot('volumeChart', volumeData, layout);
@@ -217,9 +218,15 @@ var getData = function (chartType, url) {
   
   httpRequest.onreadystatechange = function() {
     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
+      document.getElementById('tickerTextbox').placeholder = 'Example: GOOGL';
+      document.getElementById('tickerTextbox').style.color = '';
       var responseData = JSON.parse(httpRequest.responseText).dataset;
       var formattedData = formatData(chartType, responseData);
       buildChart(chartType, formattedData);
+    } else if (httpRequest.readyState === 4 && httpRequest.status === 404){
+      document.getElementById('tickerTextbox').placeholder = 'Unavailable Ticker';
+      //document.getElementById('tickerTextbox').style.placeholder.color = 'rgb(255,0,0)';
+      document.getElementById('tickerTextbox').value = '';
     }
   };
   
