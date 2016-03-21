@@ -143,11 +143,12 @@ var buildChart = function (chartType, data) {
   
   cups.forEach(function(cup) {
     var dateAverage = ( cup.maxHighDate.getTime() + cup.breakoutDate.getTime() ) / 2;
-    var apex = ( cup.maxHigh - ( cup.cupDepth * cup.maxHigh ) ) * 0.60;
+    var apex = cup.partialCup === true ? ( cup.maxHigh - ( cup.cupDepth * cup.maxHigh ) ) * 0.80 : ( cup.maxHigh - ( cup.cupDepth * cup.maxHigh ) ) * 0.75;
     var maxHighAdjusted = cup.maxHigh * 0.9;
+    var breakout = cup.partialCup === true ? apex / 0.80 : maxHighAdjusted;
   
     stockFig.layout.shapes.push({
-      path: 'M ' + cup.maxHighDate.getTime() + ', ' + maxHighAdjusted + ' Q ' + dateAverage + ', ' + apex + ' ' + cup.breakoutDate.getTime() + ', ' + maxHighAdjusted,
+      path: 'M ' + cup.maxHighDate.getTime() + ', ' + maxHighAdjusted + ' Q ' + dateAverage + ', ' + apex + ' ' + cup.breakoutDate.getTime() + ', ' + breakout,
       type: 'path',
       line: {
         color: 'rgb(93, 164, 214)'
