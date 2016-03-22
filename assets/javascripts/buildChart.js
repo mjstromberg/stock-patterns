@@ -172,35 +172,23 @@ var buildChart = function (chartType, data) {
   // Build volume chart
   var volumeData =[];
   
-  // Build dataset for up weeks
-  volumeData[0] = {
+  // Build dataset
+  volumeData = [{
     x: data[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); }),
-    y: data[5].map(function(vol, index) {
-      return data[3][index] >= data[0][index] ? data[5][index] : 0;
-    }),
+    y: data[5],
     type: 'bar',
-    marker: { color: 'rgb(93,170,136)' },
+    marker: { color: data[0].map(function(open, index) {
+      return data[3][index] >= data[0][index] ? 'rgb(93,170,136)' : 'rgb(255,121,113)';
+    }) },
     showlegend: false,
     hoverinfo: 'y'
-  };
-  
-  // Build dataset for down weeks
-  volumeData[1] = {
-    x: data[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); }),
-    y: data[5].map(function(vol, index) {
-      return data[3][index] < data[0][index] ? data[5][index] : 0;
-    }),
-    type: 'bar',
-    marker: { color: 'rgb(255,121,113)' },
-    showlegend: false,
-    hoverinfo: 'y'
-  };
-  
+  }];
+    
   // Handle volume chart layout
   var layout = {
     margin: {b: 20, t: 10},
     yaxis: {title: 'Volume'},
-    bargap: 0.99
+    bargap: 0.75
   };
    
   Plotly.newPlot('volumeChart', volumeData, layout);
