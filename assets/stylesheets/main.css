@@ -87,3 +87,11 @@ h1 {
 	border-color: rgb(8,82,107);
 	outline: 0;
 }
+
+.nav-right {
+	float: right;
+}
+
+nav {
+	background: rgb(8,82,107);
+}
