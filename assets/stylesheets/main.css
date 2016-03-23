@@ -48,11 +48,6 @@ table {
 }
 
 /* ======================================================== */
-h1 {
-	font-size: 30px;
-	color: rgb(8,82,107);
-	margin: 10px;
-}
 
 .chart {
 	margin: 0px 10px 0px 10px;
@@ -74,6 +69,11 @@ h1 {
 	padding-left: 5px;
 }
 
+#tickerSubmitButton {
+	float: right;
+	background-color: rgb(255,255,255);
+}
+
 .button {
 	cursor: pointer;
 	color: rgb(8,82,107);
@@ -88,10 +88,36 @@ h1 {
 	outline: 0;
 }
 
-.nav-right {
-	float: right;
+nav a {
+	color: rgb(255,255,255);
+	text-decoration: none;
+	font-size: 20px;
 }
 
 nav {
 	background: rgb(8,82,107);
+	height: 7vh;
+}
+
+label {
+	float: right;
+}
+
+aside.p aside.h2 {
+	float: right;
+	word-break: normal;
+}
+
+section {
+	float: left;
+}
+
+footer {
+	clear: both;
+}
+
+h1 {
+	font-size: 30px;
+	color: rgb(8,82,107);
+	margin: 10px;
 }

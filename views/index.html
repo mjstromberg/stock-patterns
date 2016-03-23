@@ -10,23 +10,37 @@
   </head>
   <body>
     <nav>
-      <div>
-        <ul class="nav-right">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="basics.html">Basics</a></li>
-        </ul>
-      </div>
+      <div id="tickerSubmitButton" class="button">Submit Ticker Symbol</div>
+      <label><input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/></label>
     </nav>
-    <h1>Stock Pattern Analyzer</h1>
-    <div id="ohlcChart" class="chart" style="width:800px;height:500px;"></div>
-    <div id="volumeChart" class="chart" style="width:800px;height:100px;"></div>
-    <div display="block">
-      <label>
-        <input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/>
-      </label>
-      <span id="tickerSubmitButton" class="button">Submit Ticker Symbol</span>
-    </div>
+    
+    <section>
+      <h1>Stock Pattern Analyzer</h1>
+      <div id="ohlcChart" class="chart" style="width:800px;height:500px;"></div>
+      <div id="volumeChart" class="chart" style="width:800px;height:100px;"></div>
+    </section>
 
+    <aside>
+      <h1>Short Term Investing Basics</h1>
+      <ul>
+        <li>
+          <h2>Cup Length:</h2>
+          <p>Cups should last between 7 and 65 weeks long, but are typically between 12 and 48 weeks.</p>
+        </li>
+        <li>
+          <h2>Cup Depth:</h2>
+          <p>Measured realtive to the previous high, cups should only see a 12% to 33% decrease to be considered healthy.</p>
+        </li>
+        <li>
+          <h2>Prior Uptrend:</h2>
+          <p>Prior uptrends need to have an increase of at least 30% from the previous low, and they should also see a substantial increase in trading volume along the way.</p>
+        </li>
+      </ul>
+    </aside>
+    
+    <footer>
+      Footer
+    </footer>
     
     <script type="text/javascript" src="/assets/javascripts/buildChart.js"></script>
     <!-- GitHub strict MIME type enforcement workaround -->
