@@ -6,18 +6,17 @@
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.rawgit.com/etpinard/plotlyjs-finance/master/plotlyjs-finance.js"></script>
-    <!--<script src="/assets/javascripts/tester.js"></script>-->
   </head>
   <body>
     <nav>
-      <div id="tickerSubmitButton" class="button">Submit Ticker Symbol</div>
-      <label><input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/></label>
+      <div id="tickerSubmitButton" class="button">Search</div>
+      <label id="tickerTextboxLabel"><input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/></label>
     </nav>
     
     <section>
       <h1>Stock Pattern Analyzer</h1>
-      <div id="ohlcChart" class="chart" style="width:800px;height:500px;"></div>
-      <div id="volumeChart" class="chart" style="width:800px;height:100px;"></div>
+      <div id="ohlcChart" class="chart"></div>
+      <div id="volumeChart" class="chart"></div>
     </section>
 
     <aside>

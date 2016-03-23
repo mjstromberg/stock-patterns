@@ -166,7 +166,15 @@ var buildChart = function (chartType, data) {
       }
     });
   });
-  
+ /* 
+  // Make chart responsive
+  var d3 = Plotly.d3;
+  var gd3 = d3.select('body').append('div').style({
+    width: '100%',
+    height: '62.5vw'
+  });
+  var gd = gd3.node();
+  */
   Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
   
   // Build volume chart
@@ -253,3 +261,9 @@ document.getElementById('tickerTextbox').onkeydown = function() {
     magic('stock');
   }
 };
+
+// On window resize, resize charts accordingly
+window.onresize = function() {
+  Plotly.Plots.resize(document.getElementById('ohlcChart'));
+  Plotly.Plots.resize(document.getElementById('volumeChart'));
+}

@@ -49,49 +49,8 @@ table {
 
 /* ======================================================== */
 
-.chart {
-	margin: 0px 10px 0px 10px;
-	border-style: solid;
-	border-width: 2px;
-	border-radius: 3px;
-	border-color: rgb(8,82,107);
-}
-
-#volumeChart {
-	border-top: none;
-}
-
-#tickerTextbox {
-	margin: 10px 0px 10px 10px;
-	width: 150px;
-	height: 35px;
-	font-size: 15px;
-	padding-left: 5px;
-}
-
-#tickerSubmitButton {
-	float: right;
-	background-color: rgb(255,255,255);
-}
-
-.button {
-	cursor: pointer;
-	color: rgb(8,82,107);
-	text-align: center;
-	display: inline-block;
-	margin: 10px;
-	padding: 11px 25px;
-	border-style: solid;
-	border-width: 2px;
-	border-radius: 3px;
-	border-color: rgb(8,82,107);
-	outline: 0;
-}
-
-nav a {
-	color: rgb(255,255,255);
-	text-decoration: none;
-	font-size: 20px;
+body {
+	font-family: Lucida Sans Unicode;
 }
 
 nav {
@@ -99,17 +58,15 @@ nav {
 	height: 7vh;
 }
 
-label {
-	float: right;
-}
-
-aside.p aside.h2 {
-	float: right;
-	word-break: normal;
-}
-
 section {
 	float: left;
+	width: 74vw;
+}
+
+aside {
+	width: 24vw;
+	float: right;
+	word-break: normal;
 }
 
 footer {
@@ -120,4 +77,58 @@ h1 {
 	font-size: 30px;
 	color: rgb(8,82,107);
 	margin: 10px;
+}
+
+.chart {
+	width: inherit;
+	margin: 0px 10px 0px 10px;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	border-color: rgb(8,82,107);
+}
+
+#ohlcChart {
+}
+
+#volumeChart {
+	border-top: none;
+}
+
+.button {
+	cursor: pointer;
+	color: rgb(8,82,107);
+	text-align: center;
+	display: inline-block;
+	margin: 10px;
+	border: 1px;
+	-webkit-border-radius: 5px; 
+  -moz-border-radius: 5px; 
+  border-radius: 5px; 
+	outline: 0;
+}
+
+#tickerTextboxLabel {
+	float: right;
+}
+
+#tickerTextbox {
+	margin: 10px 0px 10px 10px;
+	width: 150px;
+	height: 30px;
+	font-size: 15px;
+	padding-left: 5px;
+  -webkit-border-radius: 5px; 
+  -moz-border-radius: 5px; 
+  border-radius: 5px; 
+  border: 1px; 
+}
+
+#tickerSubmitButton {
+	float: right;
+	background-color: rgb(255,255,255);
+	font-size: 15px;
+	vertical-align: middle;
+	width: 100px;
+	height: 30px;
 }
