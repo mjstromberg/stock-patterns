@@ -55,7 +55,7 @@ body {
 
 nav {
 	background: rgb(8,82,107);
-	height: 7vh;
+	height: 50px;
 }
 
 section {
@@ -73,12 +73,6 @@ footer {
 	clear: both;
 }
 
-h1 {
-	font-size: 30px;
-	color: rgb(8,82,107);
-	margin: 10px;
-}
-
 .chart {
 	width: inherit;
 	margin: 0px 10px 0px 10px;
@@ -88,11 +82,28 @@ h1 {
 	border-color: rgb(8,82,107);
 }
 
+#title {
+	float: left;
+	font-size: 30px;
+	color: rgb(255,255,255);
+	margin: 10px;
+}
+
+#asideTitle {
+	font-size: 30px;
+	color: rgb(8,82,107);
+	margin: 10px;
+}
+
 #ohlcChart {
+	height: 62.5vw;
+	max-height: 500px;
 }
 
 #volumeChart {
 	border-top: none;
+	height: 12.5vw;
+	max-height: 100px;
 }
 
 .button {

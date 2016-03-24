@@ -166,15 +166,7 @@ var buildChart = function (chartType, data) {
       }
     });
   });
- /* 
-  // Make chart responsive
-  var d3 = Plotly.d3;
-  var gd3 = d3.select('body').append('div').style({
-    width: '100%',
-    height: '62.5vw'
-  });
-  var gd = gd3.node();
-  */
+
   Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
   
   // Build volume chart
