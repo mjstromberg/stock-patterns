@@ -4,14 +4,21 @@
     <meta charset="utf-8">
     <title>Stock Pattern Analyzer</title>
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.rawgit.com/etpinard/plotlyjs-finance/master/plotlyjs-finance.js"></script>
   </head>
   <body>
     <nav>
       <h1 id="header">Stock Pattern Analyzer</h1>
-      <div id="tickerSubmitButton" class="button">Search</div>
-      <input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/>
+      <!--<div id="tickerSubmitButton" class="button">Search</div>-->
+      <div id="tickerTextboxContainer">
+        <span>
+          <input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/>
+        </span>
+        <i id="tickerSubmitButton" class="material-icons button">search</i>
+      </div>
+      
     </nav>
     
     <div id="banner"></div>
