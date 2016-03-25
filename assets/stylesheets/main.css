@@ -54,7 +54,7 @@ body {
 }
 
 nav {
-	background: rgb(8,82,107);
+	background: rgb(255,255,255);
 	height: 50px;
 }
 
@@ -75,18 +75,23 @@ footer {
 
 .chart {
 	width: inherit;
-	margin: 0px 10px 0px 10px;
 	border-style: solid;
 	border-width: 2px;
 	border-radius: 3px;
 	border-color: rgb(8,82,107);
 }
 
-#title {
+#header {
 	float: left;
-	font-size: 30px;
-	color: rgb(255,255,255);
-	margin: 10px;
+	font-size: 1em;
+	color: rgb(8,82,107);
+	height: 100%;
+}
+
+#banner {
+	clear: both;
+	background: rgb(8,82,107);
+	height: 20px;
 }
 
 #asideTitle {
@@ -111,35 +116,27 @@ footer {
 	color: rgb(8,82,107);
 	text-align: center;
 	display: inline-block;
-	margin: 10px;
 	border: 1px;
-	-webkit-border-radius: 5px; 
-  -moz-border-radius: 5px; 
-  border-radius: 5px; 
 	outline: 0;
 }
 
-#tickerTextboxLabel {
-	float: right;
-}
-
 #tickerTextbox {
-	margin: 10px 0px 10px 10px;
-	width: 150px;
-	height: 30px;
+	float: right;
+	border: 2px;
+	border-color: rgb(8,82,107);
+	width: 100px;
+	height: 100%;
 	font-size: 15px;
 	padding-left: 5px;
-  -webkit-border-radius: 5px; 
-  -moz-border-radius: 5px; 
-  border-radius: 5px; 
-  border: 1px; 
 }
 
 #tickerSubmitButton {
 	float: right;
+	border: 2px;
+	border-color: rgb(8,82,107);
 	background-color: rgb(255,255,255);
-	font-size: 15px;
+	font-size: 1em;
 	vertical-align: middle;
-	width: 100px;
-	height: 30px;
+	width: 50px;
+	height: 100%;
 }
