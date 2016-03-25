@@ -51,20 +51,22 @@ table {
 
 body {
 	font-family: Lucida Sans Unicode;
+	box-sizing: border-box;
 }
 
 nav {
-	background: rgb(255,255,255);
+	width: 100vw;
 	height: 50px;
 }
 
 section {
-	float: left;
-	width: 74vw;
+	/*float: left;*/
+	/*width: 75vw;*/
 }
 
 aside {
-	width: 24vw;
+	display: none;
+	width: 25vw;
 	float: right;
 	word-break: normal;
 }
@@ -74,9 +76,12 @@ footer {
 }
 
 .chart {
+	margin: auto;
 	width: inherit;
+	max-width: 800px;
+	min-width: 400px;
 	border-style: solid;
-	border-width: 2px;
+	border-width: 1px;
 	border-radius: 3px;
 	border-color: rgb(8,82,107);
 }
@@ -92,6 +97,7 @@ footer {
 	clear: both;
 	background: rgb(8,82,107);
 	height: 20px;
+	margin: 0px 0px 20px 0px;
 }
 
 #asideTitle {
@@ -101,14 +107,16 @@ footer {
 }
 
 #ohlcChart {
-	height: 62.5vw;
+	height: 46.875vw;
 	max-height: 500px;
+	min-width: 189.5px;
 }
 
 #volumeChart {
 	border-top: none;
-	height: 12.5vw;
+	height: 15vw;
 	max-height: 100px;
+	min-width: 61px;
 }
 
 .button {
@@ -124,7 +132,7 @@ footer {
 	float: right;
 	border: 2px;
 	border-color: rgb(8,82,107);
-	width: 100px;
+	width: 200px;
 	height: 100%;
 	font-size: 15px;
 	padding-left: 5px;

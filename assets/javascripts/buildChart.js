@@ -43,22 +43,10 @@ var buildChart = function (chartType, data) {
   );
   
   // Handle stock chart layout
+  stockFig.layout.margin = {l: 60, r: 20, t: 50, b: 30};
+  stockFig.layout.yaxis = {title: chartType === 'stock' ? 'Adjusted Stock Price ($)     ' : 'Price ($)     '};
   stockFig.layout.title = chartType === 'stock' ? data[6].name.slice(0, data[6].name.indexOf(')') + 1) + ' - Weekly' : 'S&P 500 - Daily';
-  stockFig.layout.xaxis.title = 'Dates';
-  stockFig.layout.annotations = [{
-    text: chartType === 'stock' ? 'Adjusted Stock Price ($)     ' : 'Price ($)     ',
-    x: '-0.055',
-    y: 0.5,
-    xref: 'paper',
-    yref: 'paper',
-    font: {
-      size: 14
-    },
-    showarrow: false,
-    xanchor: 'right',
-    textangle: 270
-  }];
-  
+
   // Loop through dataset and check for cup patterns
   var newData = data.slice();
   newData[4] = newData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); });
@@ -186,8 +174,8 @@ var buildChart = function (chartType, data) {
     
   // Handle volume chart layout
   var layout = {
-    margin: {b: 20, t: 10},
-    yaxis: {title: 'Volume'},
+    margin: {l: 60, r: 20, t: 10, b: 30},
+    yaxis: {title: 'Vol.'},
     bargap: 0.75
   };
    
@@ -207,13 +195,13 @@ var getData = function (chartType, url) {
   httpRequest.onreadystatechange = function() {
     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
       document.getElementById('tickerTextbox').placeholder = 'Example: GOOGL';
-      document.getElementById('tickerTextbox').style.color = '';
+      document.getElementById('tickerTextbox').placeholder.color = '';
       var responseData = JSON.parse(httpRequest.responseText).dataset;
       var formattedData = formatData(chartType, responseData);
       buildChart(chartType, formattedData);
     } else if (httpRequest.readyState === 4 && httpRequest.status === 404){
       document.getElementById('tickerTextbox').placeholder = 'Unavailable Ticker';
-      //document.getElementById('tickerTextbox').style.placeholder.color = 'rgb(255,0,0)';
+      document.getElementById('tickerTextbox').placeholder.color = 'rgb(255,0,0)';
       document.getElementById('tickerTextbox').value = '';
     }
   };
