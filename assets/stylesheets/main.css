@@ -52,6 +52,8 @@ table {
 body {
 	font-family: Arial;
 	box-sizing: border-box;
+	position: relative;
+	min-height: 1000px;
 }
 
 nav {
@@ -73,6 +75,10 @@ aside {
 
 footer {
 	clear: both;
+	position: absolute;
+	bottom: 0;
+	width: 100vw;
+	height: 30px;
 }
 
 .chart {
@@ -90,6 +96,12 @@ footer {
 	float: left;
 	font-size: 2em;
 	color: rgb(8,82,107);
+}
+
+#headerContainer {
+  display: flex;
+	align-items: center;
+	float: left;
 	height: 100%;
 }
 
@@ -119,20 +131,13 @@ footer {
 	min-width: 61px;
 }
 
-.button {
-	cursor: pointer;
-	color: rgb(8,82,107);
-	text-align: center;
-	display: inline-block;
-	border: 1px;
-	outline: 0;
-}
-
 #tickerTextboxContainer {
 	float: right;
 	position: relative;
 	width: 300px;
 	height: 100%;
+	display: flex;
+	align-items: center;
 }
 
 #tickerTextbox {
@@ -146,9 +151,17 @@ footer {
 }
 
 #tickerSubmitButton {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 40px;
-	height: 40px;
+	width: 36px;
+	height: 36px;
+}
+
+.button {
+	cursor: pointer;
+	color: rgb(8,82,107);
+	border: 1px;
+	outline: 0;
+}
+
+.material-icons.md-36 {
+	font-size: 36px;
 }
