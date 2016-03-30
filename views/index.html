@@ -5,13 +5,23 @@
     <title>Stock Pattern Analyzer</title>
     <link rel="stylesheet" href="/assets/stylesheets/main.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='shortcut icon' href='/assets/favicon/favicon.ico' type='image/x-icon'/ >
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdn.rawgit.com/etpinard/plotlyjs-finance/master/plotlyjs-finance.js"></script>
   </head>
   <body>
     <nav>
       <div id="headerContainer">
-        <h1 id="header">Stock Pattern Analyzer</h1>  
+        <div id="header-stack">
+          <h1 id="header">Stock Pattern Analyzer</h1>
+          <h2 id="sub-header">Search A Ticker Symbol And Analyze For Basic Cup Patterns</h2>
+        </div>  
+      </div>
+      <div id="menu-container">
+        <div class="show-menu">
+          <i class="material-icons md-36">more_vert</i>
+          <input type="checkbox" id="show-menu" role="button">
+        </div>
       </div>
       <div id="searchBar">
         <div id="tickerTextboxContainer">
@@ -21,7 +31,6 @@
         <i id="tickerSubmitButton" class="material-icons md-36 button">search</i>
         </div>
       </div>
-      
     </nav>
     
     <div id="banner"></div>

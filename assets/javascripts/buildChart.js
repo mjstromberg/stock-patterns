@@ -43,7 +43,7 @@ var buildChart = function (chartType, data) {
   );
   
   // Handle stock chart layout
-  stockFig.layout.margin = {l: 60, r: 20, t: 50, b: 30};
+  stockFig.layout.margin = {l: 60, r: 30, t: 50, b: 30};
   stockFig.layout.yaxis = {title: chartType === 'stock' ? 'Adjusted Stock Price ($)     ' : 'Price ($)     '};
   stockFig.layout.title = chartType === 'stock' ? data[6].name.slice(0, data[6].name.indexOf(')') + 1) + ' - Weekly' : 'S&P 500 - Daily';
 
@@ -174,7 +174,7 @@ var buildChart = function (chartType, data) {
     
   // Handle volume chart layout
   var layout = {
-    margin: {l: 60, r: 20, t: 10, b: 30},
+    margin: {l: 60, r: 30, t: 10, b: 30},
     yaxis: {title: 'Vol.'},
     bargap: 0.75
   };

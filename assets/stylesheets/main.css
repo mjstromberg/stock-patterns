@@ -62,6 +62,7 @@ nav {
 }
 
 section {
+	width: 100vw;
 }
 
 aside {
@@ -92,9 +93,8 @@ footer {
 }
 
 #header {
-	font-size: 2em;
+	font-size: 1.9em;
 	color: rgb(8,82,107);
-	margin: 10px;
 }
 
 #headerContainer {
@@ -102,6 +102,16 @@ footer {
 	align-items: center;
 	float: left;
 	height: 100%;
+	margin: 0px 0px 0px 10px;
+}
+
+#sub-header {
+	font-size: 0.75em;
+	color: rgb(8,82,107);
+	margin: 3px 0px 0px 0px;
+}
+
+#header-stack {
 }
 
 #banner {
@@ -134,7 +144,7 @@ footer {
 #searchBar {
 	float: right;
 	height: 100%;
-	width: 300px;
+	width: 220px;
 	display: flex;
 	align-items: center;
 	margin-right: 10px;
@@ -148,19 +158,19 @@ footer {
 
 #tickerTextboxDiv {
 	position: absolute;
-	right: -300px;
+	right: -220px;
 }
 
 #tickerTextbox {
 	font-size: 15px;
 	padding-left: 5px;
-	width: 250px;
+	width: 200px;
 	height: 30px;
 }
 
 #tickerSubmitButton {
 	position: absolute;
-	right: -300px;
+	right: -220px;
 	width: 36px;
 	height: 36px;
 }
@@ -179,13 +189,36 @@ footer {
 	text-decoration: none;
 }
 
+#menu-container {
+	float: right;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
 .button {
 	cursor: pointer;
-	color: rgb(8,82,107);
 	border: 1px;
 	outline: 0;
 }
 
 .material-icons.md-36 {
 	font-size: 36px;
+	color: rgb(8,82,107);
+}
+
+.show-menu {
+	background: rgb(255,255,255);
+	height: 36px;
+	width: 36px;
+	margin: 0px 10px 0px 0px;
+	display: block;
+}
+
+input[type=checkbox] {
+	display: none;
+}
+
+input[type=checkbox]:checked ~ .show-menu {
+	display: block;
 }
