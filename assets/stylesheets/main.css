@@ -207,6 +207,11 @@ footer {
 	color: rgb(8,82,107);
 }
 
+.material-icons.md-48 {
+	font-size: 48px;
+	color: rgb(255,149,3);
+}
+
 .show-menu {
 	background: rgb(255,255,255);
 	height: 36px;
