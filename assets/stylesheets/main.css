@@ -1,3 +1,7 @@
+/*==============================================*/
+/* CSS Reset */
+/*==============================================*/
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -47,7 +51,9 @@ table {
 	border-spacing: 0;
 }
 
-/* ======================================================== */
+/*==============================================*/
+/* Custom Styles */
+/*==============================================*/
 
 body {
 	font-family: "Verdana", Sans-serif;
@@ -58,11 +64,12 @@ body {
 
 nav {
 	width: 100vw;
-	height: 50px;
+	height: 60px;
 }
 
 section {
 	width: 100vw;
+	padding: 0px 0px 50px 0px;
 }
 
 aside {
@@ -76,7 +83,7 @@ footer {
 	position: absolute;
 	bottom: 0;
 	width: 100vw;
-	height: 50px;
+	height: 30px;
 	border-top: 1px solid rgb(8,82,107);
 	background: rgb(255,255,255);
 }
@@ -92,108 +99,104 @@ footer {
 	border-color: rgb(8,82,107);
 }
 
-#header {
-	font-size: 1.9em;
-	color: rgb(8,82,107);
-}
-
-#headerContainer {
-  display: flex;
+.container {
+	display: flex;
 	align-items: center;
-	float: left;
 	height: 100%;
-	margin: 0px 0px 0px 10px;
 }
 
-#sub-header {
-	font-size: 0.75em;
-	color: rgb(8,82,107);
-	margin: 3px 0px 0px 0px;
-}
-
-#header-stack {
-}
-
-#banner {
+.banner {
 	clear: both;
 	height: 1px;
 	background: rgb(8,82,107);
 	margin-bottom: 20px;
 }
 
-#asideTitle {
+#header-container {
+	float: left;
+	margin: 0px 0px 0px 10px;
+}
+
+#header {
+	font-size: 2.3em;
+	color: rgb(8,82,107);
+}
+
+#sub-header {
+	display: none;
+	font-size: 1em;
+	color: rgb(8,82,107);
+	margin: 3px 0px 0px 0px;
+}
+
+#menu-container {
+	float: right;
+}
+
+#aside-title {
 	font-size: 30px;
 	color: rgb(8,82,107);
 	margin: 10px;
 }
 
-#ohlcChart {
+#ohlc-chart {
 	height: 46.875vw;
 	max-height: 500px;
 	min-width: 189.5px;
 	margin-top: 20px;
 }
 
-#volumeChart {
+#volume-chart {
 	border-top: none;
 	height: 15vw;
 	max-height: 100px;
 	min-width: 61px;
 }
 
-#searchBar {
+#search-container {
 	float: right;
-	height: 100%;
 	width: 220px;
-	display: flex;
-	align-items: center;
 	margin-right: 10px;
 }
 
-#tickerTextboxContainer {
+#ticker-textbox-container {
 	float: right;
 	position: relative;
 	height: 36px;
 }
 
-#tickerTextboxDiv {
+#ticker-textbox-div {
 	position: absolute;
 	right: -220px;
 }
 
-#tickerTextbox {
+#ticker-textbox {
 	font-size: 15px;
 	padding-left: 5px;
 	width: 200px;
 	height: 30px;
 }
 
-#tickerSubmitButton {
+#ticker-submit-button {
 	position: absolute;
 	right: -220px;
 	width: 36px;
 	height: 36px;
 }
 
-#footerContainer {
-	display: flex;
-	align-items: center;
+#footer-container {
 	justify-content: center;
-	height: 100%;
 }
 
-#footerContact {
+#footer-contact {
 	font-size: 1em;
 	color: rgb(8,82,107);
-	margin: 10px;
 	text-decoration: none;
+	margin: 10px;
 }
 
-#menu-container {
-	float: right;
-	display: flex;
-	align-items: center;
-	height: 100%;
+#show-aside {
+	
 }
 
 .button {
@@ -210,9 +213,10 @@ footer {
 .material-icons.md-48 {
 	font-size: 48px;
 	color: rgb(255,149,3);
+	margin: 0px 5px 0px 0px;
 }
 
-.show-menu {
+.show-aside {
 	background: rgb(255,255,255);
 	height: 36px;
 	width: 36px;
@@ -224,6 +228,20 @@ input[type=checkbox] {
 	display: none;
 }
 
-input[type=checkbox]:checked ~ .show-menu {
+input[type=checkbox]:checked ~ .show-aside {
 	display: block;
+}
+
+#info-button {
+	color: rgb(255,149,3);
+}
+
+@media (max-width = 775px) {
+	#header-container {
+	  float: none;
+  }
+	
+	#search-container {
+	  float: none;
+  }
 }

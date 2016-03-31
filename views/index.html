@@ -12,38 +12,38 @@
   </head>
   <body>
     <nav>
-      <div id="headerContainer">
+      <div id="header-container" class="container">
         <i class="material-icons md-48">trending_up</i>
-        <div id="header-stack">
+        <div>
           <h1 id="header">Stock Pattern Analyzer</h1>
           <h2 id="sub-header">Search A Ticker Symbol And Analyze For Basic Cup Patterns</h2>
         </div>  
       </div>
-      <div id="menu-container">
-        <div class="show-menu">
-          <i class="material-icons md-36">more_vert</i>
-          <input type="checkbox" id="show-menu" role="button">
+      <div id="menu-container" class="container">
+        <div class="show-aside">
+          <i id="info-button" class="material-icons md-36">info_outline</i>
+          <input type="checkbox" id="show-aside" role="button">
         </div>
       </div>
-      <div id="searchBar">
-        <div id="tickerTextboxContainer">
-          <div id="tickerTextboxDiv">
-            <input type="text" id="tickerTextbox" placeholder="Example: GOOGL"/>
+      <div id="search-container" class="container">
+        <div id="ticker-textbox-container">
+          <div id="ticker-textbox-div">
+            <input type="text" id="ticker-textbox" placeholder="Example: GOOGL"/>
           </div>
-        <i id="tickerSubmitButton" class="material-icons md-36 button">search</i>
+        <i id="ticker-submit-button" class="material-icons md-36 button">search</i>
         </div>
       </div>
     </nav>
     
-    <div id="banner"></div>
+    <div class="banner"></div>
     
     <section>
-      <div id="ohlcChart" class="chart"></div>
-      <div id="volumeChart" class="chart"></div>
+      <div id="ohlc-chart" class="chart"></div>
+      <div id="volume-chart" class="chart"></div>
     </section>
 
     <aside>
-      <h2 id="asideTitle">Short Term Investing Basics</h2>
+      <h2 id="aside-title">Short Term Investing Basics</h2>
       <ul>
         <li>
           <h3>Cup Length:</h3>
@@ -61,8 +61,8 @@
     </aside>
     
     <footer>
-      <div id="footerContainer">
-        <a id="footerContact" href="mailto:michaeljstromberg@gmail.com">
+      <div id="footer-container" class="container">
+        <a id="footer-contact" href="mailto:michaeljstromberg@gmail.com">
           Feedback? michaeljstromberg@gmail.com
         </a>
       </div>
@@ -73,20 +73,3 @@
     <!--<script src="https://cdn.rawgit.com/mjstromberg/stock-patterns/master/assets/javascripts/buildChart.js"></script>-->
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -4,7 +4,7 @@
 
 // Define function to get ticker symbol and make http reqest
 var getStockURL = function() {
-  var stockName = document.getElementById('tickerTextbox').value.toString().toUpperCase();
+  var stockName = document.getElementById('ticker-textbox').value.toString().toUpperCase();
   var stockURL = 'https://www.quandl.com/api/v3/datasets/WIKI/' + stockName + '.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100&collapse=weekly';
 
   return stockURL;
@@ -155,7 +155,7 @@ var buildChart = function (chartType, data) {
     });
   });
 
-  Plotly.newPlot('ohlcChart', stockFig.data, stockFig.layout);
+  Plotly.newPlot('ohlc-chart', stockFig.data, stockFig.layout);
   
   // Build volume chart
   var volumeData =[];
@@ -179,7 +179,7 @@ var buildChart = function (chartType, data) {
     bargap: 0.75
   };
    
-  Plotly.newPlot('volumeChart', volumeData, layout);
+  Plotly.newPlot('volume-chart', volumeData, layout);
 }
 
 
@@ -194,15 +194,15 @@ var getData = function (chartType, url) {
   
   httpRequest.onreadystatechange = function() {
     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-      document.getElementById('tickerTextbox').placeholder = 'Example: GOOGL';
-      document.getElementById('tickerTextbox').placeholder.color = '';
+      document.getElementById('ticker-textbox').placeholder = 'Example: GOOGL';
+      document.getElementById('ticker-textbox').placeholder.color = '';
       var responseData = JSON.parse(httpRequest.responseText).dataset;
       var formattedData = formatData(chartType, responseData);
       buildChart(chartType, formattedData);
     } else if (httpRequest.readyState === 4 && httpRequest.status === 404){
-      document.getElementById('tickerTextbox').placeholder = 'Unavailable Ticker';
-      document.getElementById('tickerTextbox').placeholder.color = 'rgb(255,0,0)';
-      document.getElementById('tickerTextbox').value = '';
+      document.getElementById('ticker-textbox').placeholder = 'Unavailable Ticker';
+      document.getElementById('ticker-textbox').placeholder.color = 'rgb(255,0,0)';
+      document.getElementById('ticker-textbox').value = '';
     }
   };
   
@@ -231,12 +231,12 @@ var magic = function(chartType) {
 magic('index');
 
 // On click, make request to get data for stock named in textbox      
-document.getElementById('tickerSubmitButton').onclick = function() {
+document.getElementById('ticker-submit-button').onclick = function() {
   magic('stock');
 };
 
 // On keydown, make request to get data for stock named in textbox
-document.getElementById('tickerTextbox').onkeydown = function() {
+document.getElementById('ticker-textbox').onkeydown = function() {
   if(event.keyCode === 13) {
     magic('stock');
   }
@@ -244,6 +244,6 @@ document.getElementById('tickerTextbox').onkeydown = function() {
 
 // On window resize, resize charts accordingly
 window.onresize = function() {
-  Plotly.Plots.resize(document.getElementById('ohlcChart'));
-  Plotly.Plots.resize(document.getElementById('volumeChart'));
+  Plotly.Plots.resize(document.getElementById('ohlc-chart'));
+  Plotly.Plots.resize(document.getElementById('volume-chart'));
 }
