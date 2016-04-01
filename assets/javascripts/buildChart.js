@@ -246,4 +246,26 @@ document.getElementById('ticker-textbox').onkeydown = function() {
 window.onresize = function() {
   Plotly.Plots.resize(document.getElementById('ohlc-chart'));
   Plotly.Plots.resize(document.getElementById('volume-chart'));
-}
+};
+
+// On info button click, show cup analyzer information
+document.getElementById('show-aside').onclick = function() {
+  var elem = document.getElementById('info-sidebar');
+  var sidebarDisplay = window.getComputedStyle(elem, null).getPropertyValue('display');
+  
+  if (sidebarDisplay === 'none') {
+    document.getElementById('section').style.width = '67vw';
+    document.getElementById('section').style.margin = '0vw 0vw 0vw 1vw';
+    document.getElementById('info-sidebar').style.display = 'block';
+    document.getElementById('info-button').style.display = 'none';
+    document.getElementById('close-button').style.display = 'block';
+  } else {
+    document.getElementById('section').style.width = '100vw';
+    document.getElementById('info-sidebar').style.display = 'none';
+    document.getElementById('info-button').style.display = 'block';
+    document.getElementById('close-button').style.display = 'none';
+  }
+  
+  Plotly.Plots.resize(document.getElementById('ohlc-chart'));
+  Plotly.Plots.resize(document.getElementById('volume-chart'));
+};

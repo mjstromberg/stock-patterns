@@ -20,9 +20,12 @@
         </div>  
       </div>
       <div id="menu-container" class="container">
-        <div class="show-aside">
+        <div id="button-holder">
           <i id="info-button" class="material-icons md-36">info_outline</i>
-          <input type="checkbox" id="show-aside" role="button">
+          <i id="close-button" class="material-icons md-36">close</i>
+          <label for="show-aside" class="button">
+            <input type="button" id="show-aside" class="show-aside" onclick="">
+          </label>
         </div>
       </div>
       <div id="search-container" class="container">
@@ -37,13 +40,15 @@
     
     <div class="banner"></div>
     
-    <section>
-      <div id="ohlc-chart" class="chart"></div>
-      <div id="volume-chart" class="chart"></div>
+    <section id="section" class="container">
+      <div id="chart-box">
+        <div id="ohlc-chart" class="chart"></div>
+        <div id="volume-chart" class="chart"></div>
+      </div>
     </section>
 
-    <aside>
-      <h2 id="aside-title">Short Term Investing Basics</h2>
+    <aside id="info-sidebar">
+      <h2 id="aside-title">Information</h2>
       <ul>
         <li>
           <h3>Cup Length:</h3>
