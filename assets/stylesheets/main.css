@@ -69,7 +69,9 @@ nav {
 
 section {
 	float: left;
-	width: 100vw;
+	display: flex;
+	align-items: center;
+	width: 98vw;
 	padding-bottom: 50px;
 	margin: 0vw 1vw 0vw 1vw;
 }
@@ -223,12 +225,10 @@ footer {
 	font-size: 1em;
 	color: rgb(8,82,107);
 	text-decoration: none;
-	margin: 10px;
 }
 
 .button {
 	cursor: pointer;
-	border: 1px;
 	outline: 0;
 }
 
