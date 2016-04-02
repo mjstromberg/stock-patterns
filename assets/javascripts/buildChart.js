@@ -251,21 +251,41 @@ window.onresize = function() {
 // On info button click, show cup analyzer information
 document.getElementById('show-aside').onclick = function() {
   var elem = document.getElementById('info-sidebar');
-  var sidebarDisplay = window.getComputedStyle(elem, null).getPropertyValue('display');
+  var sidebarDisplay = window.getComputedStyle(elem, null).getPropertyValue('z-index');
   
-  if (sidebarDisplay === 'none') {
-    document.getElementById('section').style.width = '67vw';
-    document.getElementById('section').style.margin = '0vw 0vw 0vw 1vw';
+  if (sidebarDisplay === '0') {
     document.getElementById('info-sidebar').style.display = 'block';
+    document.getElementById('info-sidebar').style.left = '65vw';
+    document.getElementById('info-sidebar').style.right = '0';
     document.getElementById('info-button').style.display = 'none';
     document.getElementById('close-button').style.display = 'block';
+    document.getElementById('info-sidebar').style['z-index'] = 2;
   } else {
-    document.getElementById('section').style.width = '100vw';
     document.getElementById('info-sidebar').style.display = 'none';
+    document.getElementById('info-sidebar').style.left = '100vw';
+    document.getElementById('info-sidebar').style.right = '-35vw';
     document.getElementById('info-button').style.display = 'block';
     document.getElementById('close-button').style.display = 'none';
+    document.getElementById('info-sidebar').style['z-index'] = '';
   }
   
-  Plotly.Plots.resize(document.getElementById('ohlc-chart'));
-  Plotly.Plots.resize(document.getElementById('volume-chart'));
+//   if (sidebarDisplay === 'none') {
+//     document.getElementById('section').style.width = '67vw';
+//     document.getElementById('section').style.margin = '0vw 0vw 0vw 1vw';
+//     setTimeout(function() {Plotly.Plots.resize(document.getElementById('ohlc-chart'));
+//     Plotly.Plots.resize(document.getElementById('volume-chart'));}, 50);
+//     document.getElementById('info-sidebar').style.display = 'block';
+//     document.getElementById('info-button').style.display = 'none';
+//     document.getElementById('close-button').style.display = 'block';
+//     document.getElementById('info-sidebar').style['z-index'] = 2;
+//   } else {
+//     document.getElementById('section').style.width = '100vw';
+//     setTimeout(function() {Plotly.Plots.resize(document.getElementById('ohlc-chart'));
+//     Plotly.Plots.resize(document.getElementById('volume-chart'));}, 50);
+//     document.getElementById('info-sidebar').style.display = 'none';
+//     document.getElementById('info-button').style.display = 'block';
+//     document.getElementById('close-button').style.display = 'none';
+//     document.getElementById('info-sidebar').style['z-index'] = '';
+//   }
+
 };

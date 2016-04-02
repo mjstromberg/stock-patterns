@@ -65,15 +65,15 @@ body {
 nav {
 	width: 100vw;
 	height: 60px;
+	box-shadow: 0 4px 8px rgba(0,0,0,.28);
 }
 
 section {
 	float: left;
 	display: flex;
 	align-items: center;
-	width: 98vw;
-	padding-bottom: 50px;
-	margin: 0vw 1vw 0vw 1vw;
+	width: 100vw;
+	/*padding: 0vw 1vw 50px 1vw;*/
 }
 
 #chart-box {
@@ -82,13 +82,22 @@ section {
 
 aside {
 	display: none;
-	width: 25vw;
-	float: right;
-	border: 1px solid rgb(255,149,3);
-	border-radius: 3px;
+	/*width: 35vw;*/
+	/*float: right;*/
+	position: absolute;
+	left: 100vw;
+	right: -35vw;
+	top: 60px;
+	bottom: 30px;
+	background: rgb(255,255,255);
+	border: 2px solid rgb(255,149,3);
+	border-right: none;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
 	padding: 1vw;
-	margin: 0vw 1vw 0vw 0vw;
+	box-shadow: -4px 0 8px rgba(0,0,0,.28);
 	word-break: normal;
+	z-index: 0;
 }
 
 footer {
@@ -96,15 +105,19 @@ footer {
 	bottom: 0;
 	width: 100vw;
 	height: 30px;
-	border-top: 1px solid rgb(8,82,107);
+	border-top: 2px solid rgb(8,82,107);
 	background: rgb(255,255,255);
+}
+
+b {
+	font-weight: bold;
 }
 
 .chart {
 	margin: auto;
 	max-width: 800px;
 	min-width: 400px;
-	border: 1px solid rgb(8,82,107);
+	border: 2px solid rgb(8,82,107);
 	border-radius: 3px;
 }
 
@@ -116,7 +129,7 @@ footer {
 
 .banner {
 	clear: both;
-	height: 1px;
+	height: 2px;
 	width: 100vw;
 	background: rgb(8,82,107);
 	margin-bottom: 20px;
@@ -124,7 +137,7 @@ footer {
 
 #header-container {
 	float: left;
-	margin-left: 10px;
+	padding-left: 10px;
 }
 
 #header {
@@ -172,9 +185,7 @@ footer {
 
 #menu-container {
 	float: right;
-	display: flex;
-	align-items: center;
-	margin-right: 10px;
+	padding-right: 10px;
 }
 
 #button-holder {
@@ -184,6 +195,7 @@ footer {
 #info-button {
 	display: block;
 	position: absolute;
+	top: 0px;
 	right: 0px;
 	color: rgb(255,149,3);
 }
@@ -191,6 +203,7 @@ footer {
 #close-button {
 	display: none;
 	position: absolute;
+	top: 0px;
 	right: 0px;
 	color: rgb(255,149,3);
 }
@@ -218,6 +231,7 @@ footer {
 }
 
 #footer-container {
+	width: 100%;
 	justify-content: center;
 }
 
@@ -258,10 +272,6 @@ label[for="show-aside"] {
 	height: 36px;
 	width: 36px;
 	z-index: 2;
-}
-
-.show-aside:checked ~ aside {
-	display: block;
 }
 
 @media (max-width: 775px) {
