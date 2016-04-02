@@ -70,14 +70,12 @@ nav {
 
 section {
 	float: left;
-	display: flex;
-	align-items: center;
 	width: 100vw;
-	/*padding: 0vw 1vw 50px 1vw;*/
+	padding: 0vw 0vw 50px 0vw;
 }
 
 #chart-box {
-	width: 100%;
+	width: 98vw;
 }
 
 aside {
@@ -190,6 +188,8 @@ b {
 
 #button-holder {
 	position: relative;
+	height: 36px;
+	width: 36px;
 }
 
 #info-button {
@@ -206,9 +206,6 @@ b {
 	top: 0px;
 	right: 0px;
 	color: rgb(255,149,3);
-}
-
-#show-aside {
 }
 
 #aside-title {
@@ -258,8 +255,8 @@ b {
 }
 
 .show-aside {
-	position: relative;
-	right: 0px;
+	position: absolute;
+	right: 0;
 	height: 36px;
 	width: 36px;
 	display: block;
@@ -267,10 +264,11 @@ b {
 }
 
 label[for="show-aside"] {
-	position: relative;
-	right: 0px;
+	position: absolute;
+	right: 0;
 	height: 36px;
 	width: 36px;
+	padding: 0 0 0 0;
 	z-index: 2;
 }
 
