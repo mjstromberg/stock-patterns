@@ -148,7 +148,7 @@ var buildChart = function (chartType, data) {
       x1: cup.breakoutDate.getTime(),
       y1: cup.maxHigh + 0.10 + cup.maxHigh * 0.05,
       fillcolor: 'rgb(93, 164, 214)',
-      opacity: 0.2,
+      opacity: 0.3,
       line: {
         width: 0
       }
@@ -255,18 +255,20 @@ document.getElementById('show-aside').onclick = function() {
   
   if (sidebarDisplay === '0') {
     document.getElementById('info-sidebar').style.display = 'block';
-    document.getElementById('info-sidebar').style.left = '65vw';
+    document.getElementById('info-sidebar').style.left = '60vw';
     document.getElementById('info-sidebar').style.right = '0';
     document.getElementById('info-button').style.display = 'none';
     document.getElementById('close-button').style.display = 'block';
     document.getElementById('info-sidebar').style['z-index'] = 2;
+    document.getElementById('background').style.display = 'block';
   } else {
     document.getElementById('info-sidebar').style.display = 'none';
     document.getElementById('info-sidebar').style.left = '100vw';
-    document.getElementById('info-sidebar').style.right = '-35vw';
+    document.getElementById('info-sidebar').style.right = '-40vw';
     document.getElementById('info-button').style.display = 'block';
     document.getElementById('close-button').style.display = 'none';
     document.getElementById('info-sidebar').style['z-index'] = '';
+    document.getElementById('background').style.display = 'none';
   }
   
 //   if (sidebarDisplay === 'none') {

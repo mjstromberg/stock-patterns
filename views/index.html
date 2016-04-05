@@ -49,21 +49,44 @@
 
     <aside id="info-sidebar">
       <h2 id="aside-title">Information</h2>
+      <p class="info-header">Search for stock ticker symbols above and our algorithm will analyze it for healthy cup patterns.</p>
+      <div class="info-divider"></div>
       <ul>
-        <li>
-          <b>Search for stock ticker symbols above and our algorithm will analyze it for healthy cup patterns.</b>
+        <li class="info-header">Chart Legend:</li>
+        <li class="list-container">
+          <p>Buy Region:</p>
+          <div id="buy-region"></div>
         </li>
+        <li class="list-container">
+          <p>Cup Shape:</p>
+          <div id="cup-shape">
+            <svg>
+              <path d="M 0 0 Q 40 30 80 0", stroke="rgb(93, 164, 214)", stroke-width="2px", fill="transparent"/>
+            </svg>
+          </div>
+        </li>
+      </ul>
+      <div class="info-divider"></div>
+      <ul>
+        <li class="info-header">Healthy Cup Definition:</li>
         <li>
-          <h3>Cup Length:</h3>
+          <h3 class="info-cup-header">Cup Length:</h3>
           <p class="info-paragraph">Cups should last between 7 and 65 weeks long, but are typically between 12 and 48 weeks.</p>
         </li>
         <li>
-          <h3>Cup Depth:</h3>
-          <p>Measured realtive to the previous high, cups should only see a 12% to 33% decrease to be considered healthy.</p>
+          <h3 class="info-cup-header">Cup Depth:</h3>
+          <p class="info-paragraph">Measured realtive to the previous high, cups should only see a 12% to 33% decrease to be considered healthy.</p>
         </li>
         <li>
-          <h3>Prior Uptrend:</h3>
-          <p>Prior uptrends need to have an increase of at least 30% from the previous low, and they should also see a substantial increase in trading volume along the way.</p>
+          <h3 class="info-cup-header">Prior Uptrend:</h3>
+          <p class="info-paragraph">Prior uptrends need to have an increase of at least 30% from the previous low, and they should also see a substantial increase in trading volume along the way.</p>
+        </li>
+      </ul>
+      <div class="info-divider"></div> 
+      <ul>
+        <li class="info-header">Disclaimer:</li>
+        <li>
+          <p class="info-paragraph">Due to dataset limitations, some stock ticker symbols are unavailable.</p>
         </li>
       </ul>
     </aside>
@@ -75,6 +98,8 @@
         </a>
       </div>
     </footer>
+    
+    <div id="background"></div>
     
     <script type="text/javascript" src="/assets/javascripts/buildChart.js"></script>
     <!-- GitHub strict MIME type enforcement workaround -->
