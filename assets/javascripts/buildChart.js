@@ -5,10 +5,13 @@
 // Define function to get ticker symbol and make http reqest
 var getStockURL = function() {
   var stockName = document.getElementById('ticker-textbox').value.toString().toUpperCase();
-  var stockURL = 'https://www.quandl.com/api/v3/datasets/WIKI/' + stockName + '.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100&collapse=weekly';
+  return 'https://www.quandl.com/api/v3/datasets/WIKI/' + stockName + '.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100&collapse=weekly';
 
-  return stockURL;
 };
+
+var getIndexURL = function() {
+  return 'https://www.quandl.com/api/v3/datasets/YAHOO/INDEX_GSPC.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100';
+}
 
 
 // Define function to format received data
@@ -119,11 +122,6 @@ var buildChart = function (chartType, data) {
     }
   });
   
-  console.log('cups');
-  cups.forEach(function(cup) {
-    console.log(JSON.stringify(cup));
-  });
-  
   // Build annotations for cups
   stockFig.layout.shapes = [];
   
@@ -210,35 +208,27 @@ var getData = function (chartType, url) {
   httpRequest.send();
 }
 
+var magic = function(urlFunc, chartType) {
+  getData(chartType, urlFunc());
+}
 
-// Define function to execute everything
-var magic = function(chartType) {
-  var stock;
-  var data;
-  if (chartType === 'stock') {
-    stock = getStockURL();
-    data = getData(chartType, stock);
-  } else {
-    data = getData(chartType, 'https://www.quandl.com/api/v3/datasets/YAHOO/INDEX_GSPC.json?api_key=fyWKH12nMF4VuWFaXARN&limit=100');
-  }
-};
 
 /* ======================================================================== */
 /* DEFINE ACTIONS */
 /* ======================================================================== */
 
 // Build initial indices
-magic('index');
+magic(getIndexURL, 'index');
 
 // On click, make request to get data for stock named in textbox      
 document.getElementById('ticker-submit-button').onclick = function() {
-  magic('stock');
+  magic(getStockURL, 'stock');
 };
 
 // On keydown, make request to get data for stock named in textbox
 document.getElementById('ticker-textbox').onkeydown = function() {
   if(event.keyCode === 13) {
-    magic('stock');
+    magic(getStockURL, 'stock');
   }
 };
 
@@ -270,24 +260,4 @@ document.getElementById('show-aside').onclick = function() {
     document.getElementById('info-sidebar').style['z-index'] = '';
     document.getElementById('background').style.display = 'none';
   }
-  
-//   if (sidebarDisplay === 'none') {
-//     document.getElementById('section').style.width = '67vw';
-//     document.getElementById('section').style.margin = '0vw 0vw 0vw 1vw';
-//     setTimeout(function() {Plotly.Plots.resize(document.getElementById('ohlc-chart'));
-//     Plotly.Plots.resize(document.getElementById('volume-chart'));}, 50);
-//     document.getElementById('info-sidebar').style.display = 'block';
-//     document.getElementById('info-button').style.display = 'none';
-//     document.getElementById('close-button').style.display = 'block';
-//     document.getElementById('info-sidebar').style['z-index'] = 2;
-//   } else {
-//     document.getElementById('section').style.width = '100vw';
-//     setTimeout(function() {Plotly.Plots.resize(document.getElementById('ohlc-chart'));
-//     Plotly.Plots.resize(document.getElementById('volume-chart'));}, 50);
-//     document.getElementById('info-sidebar').style.display = 'none';
-//     document.getElementById('info-button').style.display = 'block';
-//     document.getElementById('close-button').style.display = 'none';
-//     document.getElementById('info-sidebar').style['z-index'] = '';
-//   }
-
 };
