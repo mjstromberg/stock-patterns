@@ -208,27 +208,23 @@ var getData = function (chartType, url) {
   httpRequest.send();
 }
 
-var magic = function(urlFunc, chartType) {
-  getData(chartType, urlFunc());
-}
-
 
 /* ======================================================================== */
 /* DEFINE ACTIONS */
 /* ======================================================================== */
 
 // Build initial indices
-magic(getIndexURL, 'index');
+getData('index', getIndexURL());
 
 // On click, make request to get data for stock named in textbox      
 document.getElementById('ticker-submit-button').onclick = function() {
-  magic(getStockURL, 'stock');
+  getData('stock', getStockURL());
 };
 
 // On keydown, make request to get data for stock named in textbox
 document.getElementById('ticker-textbox').onkeydown = function() {
   if(event.keyCode === 13) {
-    magic(getStockURL, 'stock');
+    getData('stock', getStockURL());
   }
 };
 
