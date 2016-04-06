@@ -85,7 +85,7 @@ aside {
 	box-shadow: -4px 0 8px rgba(0,0,0,.28);
 	display: none;
 	left: 100vw;
-	overflow: scroll;
+	overflow: auto;
 	overflow-x: hidden;
 	padding: 1vw;
 	position: absolute;
