@@ -12,7 +12,7 @@ var buildData = {
 }
 
 var buildCharts = {
-  buildOhlcChart: function(chartType, formattedData),
+  buildOhlcChart: function(chartType, formattedData, patternSearchFunc, annotationFunc),
   buildVolumeChart: function(formattedData),
   findCups: function(formattedData),
   buildAnnotations: function(cups)
@@ -65,21 +65,21 @@ var buildCharts = {
   buildOhlcChart: function(chartType, formattedData, patternSearchFunc, annotationFunc) {
     var stockFig = PlotlyFinance.createOHLC(
       {
-        open: data[0],
-        high: data[1],
-        low: data[2],
-        close: data[3],
-        dates: data[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); })
+        open: formattedData[0],
+        high: formattedData[1],
+        low: formattedData[2],
+        close: formattedData[3],
+        dates: formattedData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); })
       }
     );
   
     // Handle stock chart layout
     stockFig.layout.margin = {l: 60, r: 30, t: 50, b: 30};
     stockFig.layout.yaxis = {title: chartType === 'stock' ? 'Adjusted Stock Price ($)     ' : 'Price ($)     '};
-    stockFig.layout.title = chartType === 'stock' ? data[6].name.slice(0, data[6].name.indexOf(')') + 1) + ' - Weekly' : 'S&P 500 - Daily';
+    stockFig.layout.title = chartType === 'stock' ? formattedData[6].name.slice(0, formattedData[6].name.indexOf(')') + 1) + ' - Weekly' : 'S&P 500 - Daily';
 
     // Get stock patterns
-    var patterns = patternSearchFunc();
+    var patterns = patternSearchFunc(formattedData);
     
     // Build annotations for patterns
     stockFig.layout.shapes = annotationFunc(patterns);
@@ -92,11 +92,11 @@ var buildCharts = {
   buildVolumeChart: function(formattedData) {
     // Build the volume chart object in array
     var volumeData = [{
-      x: data[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); }),
-      y: data[5],
+      x: formattedData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); }),
+      y: formattedData[5],
       type: 'bar',
-      marker: { color: data[0].map(function(open, index) {
-        return data[3][index] >= data[0][index] ? 'rgb(93,170,136)' : 'rgb(255,121,113)';
+      marker: { color: formattedData[0].map(function(open, index) {
+        return formattedData[3][index] >= formattedData[0][index] ? 'rgb(93,170,136)' : 'rgb(255,121,113)';
       }) },
       showlegend: false,
       hoverinfo: 'y'
@@ -229,22 +229,17 @@ var buildCharts = {
 /* Http Request Function */
 /* ======================================================================== */
 
-// Define the http request function that gets data from argument url
-var openHttpRequest = function (chartType, url) {
+var openHttpRequest = function (chartType, dataFuncs, chartFuncs) {
   var httpRequest = new XMLHttpRequest();
-          
-  if (!httpRequest) {
-    console.log('Unable to create an XMLHTTP instance.');
-    return false;
-  }
   
   httpRequest.onreadystatechange = function() {
     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
       document.getElementById('ticker-textbox').placeholder = 'Example: GOOGL';
       document.getElementById('ticker-textbox').placeholder.color = '';
-      var responseData = JSON.parse(httpRequest.responseText).dataset;
-      var formattedData = formatData(chartType, responseData);
-      buildChart(chartType, formattedData);
+      var responseData = dataFuncs.parseData(httpRequest.responseText);
+      var formattedData = dataFuncs.formatData(chartType, responseData);
+      chartFuncs.buildOhlcChart(chartType, formattedData, chartFuncs.findCups, chartFuncs.buildAnnotations);
+      chartFuncs.buildVolumeChart(formattedData);
     } else if (httpRequest.readyState === 4 && httpRequest.status === 404){
       document.getElementById('ticker-textbox').placeholder = 'Unavailable Ticker';
       document.getElementById('ticker-textbox').placeholder.color = 'rgb(255,0,0)';
@@ -252,9 +247,9 @@ var openHttpRequest = function (chartType, url) {
     }
   };
   
-  httpRequest.open('GET', url);
+  httpRequest.open('GET', dataFuncs.getUrl(chartType));
   httpRequest.send();
-}
+};
 
 
 /* ======================================================================== */
@@ -262,17 +257,18 @@ var openHttpRequest = function (chartType, url) {
 /* ======================================================================== */
 
 // Build initial indices
-getData('index', getIndexURL());
+openHttpRequest('index', buildData, buildCharts);
+//('index', getIndexURL());
 
 // On click, make request to get data for stock named in textbox      
 document.getElementById('ticker-submit-button').onclick = function() {
-  getData('stock', getStockURL());
+  openHttpRequest('stock', buildData, buildCharts);
 };
 
 // On keydown, make request to get data for stock named in textbox
 document.getElementById('ticker-textbox').onkeydown = function() {
   if(event.keyCode === 13) {
-    getData('stock', getStockURL());
+    openHttpRequest('stock', buildData, buildCharts);
   }
 };
 
