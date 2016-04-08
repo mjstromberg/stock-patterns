@@ -183,7 +183,7 @@ var buildChart = function (chartType, data) {
 
 // Define the http request function that gets data from argument url
 var getData = function (chartType, url) {
-  httpRequest = new XMLHttpRequest();
+  var httpRequest = new XMLHttpRequest();
           
   if (!httpRequest) {
     console.log('Unable to create an XMLHTTP instance.');
