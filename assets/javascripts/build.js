@@ -1,24 +1,3 @@
-/*
-Operations:
-  trigger
-  httpRequest
-    buildData
-    buildCharts
-    
-var buildData = {
-  getUrl: function(chartType),
-  parseData: function(response),
-  formatData: function(chartType, data)
-}
-
-var buildCharts = {
-  buildOhlcChart: function(chartType, formattedData, patternSearchFunc, annotationFunc),
-  buildVolumeChart: function(formattedData),
-  findCups: function(formattedData),
-  buildAnnotations: function(cups)
-}
-*/
-
 /* ======================================================================== */
 /* Object that holds data building related methods */
 /* ======================================================================== */
@@ -251,14 +230,12 @@ var openHttpRequest = function (chartType, dataFuncs, chartFuncs) {
   httpRequest.send();
 };
 
-
 /* ======================================================================== */
-/* DEFINE ACTIONS */
+/* Define Triggers */
 /* ======================================================================== */
 
 // Build initial indices
 openHttpRequest('index', buildData, buildCharts);
-//('index', getIndexURL());
 
 // On click, make request to get data for stock named in textbox      
 document.getElementById('ticker-submit-button').onclick = function() {
