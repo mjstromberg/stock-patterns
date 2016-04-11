@@ -182,6 +182,11 @@ footer {
 	width: 200px;
 }
 
+#ticker-textbox::-ms-clear {
+	/*For IE, hide clear textbox 'X' that overlaps search icon*/
+	display: none;
+}
+
 #ticker-submit-button {
 	height: 36px;
 	position: absolute;
@@ -315,6 +320,11 @@ label[for="show-aside"] {
 
 /* Footer */
 
+.footer {
+	font-size: 0.8em;
+	margin: 0 5px 0 5px;
+}
+
 #footer-container {	
 	justify-content: center;
 	width: 100%;
@@ -322,7 +332,6 @@ label[for="show-aside"] {
 
 #footer-contact {
 	color: rgb(8,82,107);
-	font-size: 1em;
 	text-decoration: none;
 }
 

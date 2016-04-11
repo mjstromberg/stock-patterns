@@ -4,7 +4,7 @@
 
 var buildData = {
   // Determine the correct data url
-  getUrl(chartType) {
+  getUrl: function(chartType) {
     return chartType === 'stock' ? 
       'https://www.quandl.com/api/v3/datasets/WIKI/' + 
       document.getElementById('ticker-textbox').value.toString().toUpperCase() + 
@@ -13,12 +13,12 @@ var buildData = {
   },
   
   // Parse the response data from the http request
-  parseData(response) {
+  parseData: function(response) {
     return JSON.parse(response).dataset;
   },
   
   // Format the parsed data
-  formatData(chartType, dataset) {
+  formatData: function(chartType, dataset) {
     var reformattedStockData = dataset.data.reduce(function(result, dayArrayData) {
     // result = [ adjOpen, adjHigh, adjLow, adjClose, date, volume ]
     result[4].unshift([ dayArrayData[0].slice(0, 4), dayArrayData[0].slice(5, 7), dayArrayData[0].slice(8) ]);
@@ -41,7 +41,7 @@ var buildData = {
 
 var buildCharts = {
   // Build the OHLC chart object
-  buildOhlcChart(chartType, formattedData, patternSearchFunc, annotationFunc) {
+  buildOhlcChart: function(chartType, formattedData, patternSearchFunc, annotationFunc, cloneFunc) {
     var stockFig = PlotlyFinance.createOHLC(
       {
         open: formattedData[0],
@@ -58,7 +58,7 @@ var buildCharts = {
     stockFig.layout.title = chartType === 'stock' ? formattedData[6].name.slice(0, formattedData[6].name.indexOf(')') + 1) + ' - Weekly' : 'S&P 500 - Daily';
 
     // Get stock patterns
-    var patterns = patternSearchFunc(formattedData);
+    var patterns = patternSearchFunc(formattedData, cloneFunc);
     
     // Build annotations for patterns
     stockFig.layout.shapes = annotationFunc(patterns);
@@ -68,7 +68,7 @@ var buildCharts = {
   },
   
   // Build the volume chart
-  buildVolumeChart(formattedData) {
+  buildVolumeChart: function(formattedData) {
     // Build the volume chart object in array
     var volumeData = [{
       x: formattedData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); }),
@@ -93,7 +93,7 @@ var buildCharts = {
   },
   
   // Find cup patterns
-  findCups(formattedData) {
+  findCups: function(formattedData, cloneFunc) {
     var newData = formattedData.slice();
     newData[4] = newData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); });
     var cups = [];
@@ -122,7 +122,7 @@ var buildCharts = {
         } else if (index === newData[4].length - 1) {
           cupData.partialCup = true;
           cupData.breakoutDate = date;
-          cups.push(Object.assign({}, cupData));
+          cups.push(cloneFunc(cupData));
         }
       }
 
@@ -135,7 +135,7 @@ var buildCharts = {
           cupData.cupDepth = 0;
         } else {
           cupData.breakoutDate = date;
-          cups.push(Object.assign({}, cupData));
+          cups.push(cloneFunc(cupData));
           cupData.minLow = cupData.maxHigh;
           cupData.minLowDate = cupData.maxHighDate;
           cupData.maxHigh = newData[4][index];
@@ -160,7 +160,7 @@ var buildCharts = {
           } else if (index === newData[4].length - 1) {
             cupData.partialCup = true;
             cupData.breakoutDate = date;
-            cups.push(Object.assign({}, cupData));
+            cups.push(cloneFunc(cupData));
           }
         }
       }
@@ -170,7 +170,7 @@ var buildCharts = {
   },
   
   // Build annotations for patterns
-  buildAnnotations(patterns) {
+  buildAnnotations: function(patterns) {
     var results = [];
     
     patterns.forEach(function(cup) {
@@ -202,6 +202,19 @@ var buildCharts = {
     });
     
     return results;
+  },
+  
+  // Clone object's enumerable, non-nested properties/values since IE doesn't support Object.assing()
+  clone: function(obj) {
+    var clonedObj = {};
+    
+    for (var key in obj) {
+      if({}.hasOwnProperty.call(obj,key)) {
+        clonedObj[key] = obj[key];
+      }
+    }
+    
+    return clonedObj;
   }
 };
 
@@ -217,7 +230,7 @@ var openHttpRequest = function (chartType, dataFuncs, chartFuncs) {
       document.getElementById('ticker-textbox').placeholder = 'Example: GOOGL';
       var responseData = dataFuncs.parseData(httpRequest.responseText);
       var formattedData = dataFuncs.formatData(chartType, responseData);
-      chartFuncs.buildOhlcChart(chartType, formattedData, chartFuncs.findCups, chartFuncs.buildAnnotations);
+      chartFuncs.buildOhlcChart(chartType, formattedData, chartFuncs.findCups, chartFuncs.buildAnnotations, chartFuncs.clone);
       chartFuncs.buildVolumeChart(formattedData);
     } else if (httpRequest.readyState === 4 && httpRequest.status === 404){
       document.getElementById('ticker-textbox').placeholder = 'Unavailable Ticker';
@@ -242,7 +255,7 @@ document.getElementById('ticker-submit-button').onclick = function() {
 };
 
 // On keydown, make request to get data for stock named in textbox
-document.getElementById('ticker-textbox').onkeydown = function() {
+document.getElementById('ticker-textbox').onkeydown = function(event) {
   if(event.keyCode === 13) {
     openHttpRequest('stock', buildData, buildCharts);
   }
