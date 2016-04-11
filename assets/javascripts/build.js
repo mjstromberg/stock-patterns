@@ -4,7 +4,7 @@
 
 var buildData = {
   // Determine the correct data url
-  getUrl: function(chartType) {
+  getUrl(chartType) {
     return chartType === 'stock' ? 
       'https://www.quandl.com/api/v3/datasets/WIKI/' + 
       document.getElementById('ticker-textbox').value.toString().toUpperCase() + 
@@ -13,12 +13,12 @@ var buildData = {
   },
   
   // Parse the response data from the http request
-  parseData: function(response) {
+  parseData(response) {
     return JSON.parse(response).dataset;
   },
   
   // Format the parsed data
-  formatData: function(chartType, dataset) {
+  formatData(chartType, dataset) {
     var reformattedStockData = dataset.data.reduce(function(result, dayArrayData) {
     // result = [ adjOpen, adjHigh, adjLow, adjClose, date, volume ]
     result[4].unshift([ dayArrayData[0].slice(0, 4), dayArrayData[0].slice(5, 7), dayArrayData[0].slice(8) ]);
@@ -41,7 +41,7 @@ var buildData = {
 
 var buildCharts = {
   // Build the OHLC chart object
-  buildOhlcChart: function(chartType, formattedData, patternSearchFunc, annotationFunc) {
+  buildOhlcChart(chartType, formattedData, patternSearchFunc, annotationFunc) {
     var stockFig = PlotlyFinance.createOHLC(
       {
         open: formattedData[0],
@@ -68,7 +68,7 @@ var buildCharts = {
   },
   
   // Build the volume chart
-  buildVolumeChart: function(formattedData) {
+  buildVolumeChart(formattedData) {
     // Build the volume chart object in array
     var volumeData = [{
       x: formattedData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); }),
@@ -93,7 +93,7 @@ var buildCharts = {
   },
   
   // Find cup patterns
-  findCups: function(formattedData) {
+  findCups(formattedData) {
     var newData = formattedData.slice();
     newData[4] = newData[4].map(function(d) { return new Date(d[0], d[1]-1, d[2]); });
     var cups = [];
@@ -106,7 +106,8 @@ var buildCharts = {
       breakoutDate: 0,
       partialCup: false
     };
-
+    
+    // Cup finding algorithm
     newData[4].forEach(function(date, index) {
       if (newData[1][index] <= cupData.maxHigh &&
           newData[2][index] >= cupData.minLow &&
@@ -169,7 +170,7 @@ var buildCharts = {
   },
   
   // Build annotations for patterns
-  buildAnnotations: function(patterns) {
+  buildAnnotations(patterns) {
     var results = [];
     
     patterns.forEach(function(cup) {
@@ -214,14 +215,12 @@ var openHttpRequest = function (chartType, dataFuncs, chartFuncs) {
   httpRequest.onreadystatechange = function() {
     if (httpRequest.readyState === 4 && httpRequest.status === 200) {
       document.getElementById('ticker-textbox').placeholder = 'Example: GOOGL';
-      document.getElementById('ticker-textbox').placeholder.color = '';
       var responseData = dataFuncs.parseData(httpRequest.responseText);
       var formattedData = dataFuncs.formatData(chartType, responseData);
       chartFuncs.buildOhlcChart(chartType, formattedData, chartFuncs.findCups, chartFuncs.buildAnnotations);
       chartFuncs.buildVolumeChart(formattedData);
     } else if (httpRequest.readyState === 4 && httpRequest.status === 404){
       document.getElementById('ticker-textbox').placeholder = 'Unavailable Ticker';
-      document.getElementById('ticker-textbox').placeholder.color = 'rgb(255,0,0)';
       document.getElementById('ticker-textbox').value = '';
     }
   };
