@@ -104,16 +104,11 @@ var buildCharts = {
       minLowDate: newData[4][0],
       cupDepth: 0,
       breakoutDate: 0,
-      partialCup: false,
-      chartLow: 0
+      partialCup: false
     };
     
     // Cup finding algorithm
     newData[4].forEach(function(date, index) {
-      if (cupData.chartLow === 0 || newData[2][index] < cupData.chartLow) {
-        cupData.chartLow = newData[2][index];
-      }
-      
       if (newData[1][index] <= cupData.maxHigh &&
           newData[2][index] >= cupData.minLow &&
           (cupData.maxHigh - cupData.minLow) / cupData.minLow > 0.30) {
@@ -177,12 +172,10 @@ var buildCharts = {
   // Build annotations for patterns
   buildAnnotations: function(patterns) {
     var results = [];
-    var chartMin = patterns[patterns.length - 1].chartLow;
     
     patterns.forEach(function(cup) {
       var dateAverage = ( cup.maxHighDate.getTime() + cup.breakoutDate.getTime() ) / 2;
-      //var apex = cup.partialCup === true ? ( cup.maxHigh - ( cup.cupDepth * cup.maxHigh ) ) * 0.80 : ( cup.maxHigh - ( cup.cupDepth * cup.maxHigh ) ) * 0.75;
-      var apex = cup.maxHigh - 2 * ( cup.cupDepth * cup.maxHigh );
+      var apex = cup.partialCup === true ? ( cup.maxHigh - ( cup.cupDepth * cup.maxHigh ) ) * 0.80 : ( cup.maxHigh - ( cup.cupDepth * cup.maxHigh ) ) * 0.75;
       var maxHighAdjusted = cup.maxHigh * 0.9;
       var breakout = cup.partialCup === true ? Math.min(apex / 0.80, maxHighAdjusted) : maxHighAdjusted;
 
@@ -296,4 +289,4 @@ document.getElementById('show-aside').onclick = function() {
     document.getElementById('info-sidebar').style['z-index'] = '';
     document.getElementById('background').style.display = 'none';
   }
-};  
+};
